@@ -1,0 +1,14 @@
+.inscription-div {
+    width: 30%;
+    position: relative;
+    left: 70%;
+}
+
+.description-div {
+    width: 65%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
+

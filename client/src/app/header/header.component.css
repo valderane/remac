@@ -1,0 +1,13 @@
+
+.tool-bar-style {
+    position: sticky;
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0; /* Sets the sticky toolbar to be on top */
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.title {
+    font-size: 100%;
+}
