@@ -29,7 +29,6 @@ exports.findAll = (req, res) => {
       message:err.message || "cannot retreive data from database"
     });
   });
-
 };
 
 exports.findOne = (req, res) => {
