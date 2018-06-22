@@ -1,0 +1,28 @@
+<form>
+
+  <mat-form-field>
+    <mat-select placeholder="selectionner un domaine professionnel" [formControl]="domains" (ngModelChange)="changeSubDomainsList();" multiple>
+      <mat-select-trigger>
+        {{domains.value ? domains.value[0] : ''}}
+        <span *ngIf="domains.value?.length > 1" >
+                (+{{domains.value.length - 1}} others)
+              </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let domain of domainsList" [value]="domain.name" >{{domain.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="sous domains pour plus de précision" [formControl]="subDomains" multiple>
+      <mat-select-trigger>
+        {{subDomains.value ? subDomains.value[0] : ''}}
+        <span *ngIf="subDomains.value?.length > 1" >
+                (+{{subDomains.value.length - 1}} others)
+              </span>
+      </mat-select-trigger>
+
+      <mat-option *ngFor="let subdomain of subDomainsList" [value]="subdomain" >{{subdomain}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</form>

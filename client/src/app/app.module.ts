@@ -12,6 +12,10 @@ import { IndexContentComponent } from './index-content/index-content.component';
 import { LoginComponent } from './login/login.component';
 import { DescriptionComponent } from './description/description.component';
 import { InscriptionComponent } from './inscription/inscription.component';
+import { MainComponent } from './main/main.component';
+import { MainSelectionComponent } from './main-selection/main-selection.component';
+import { MainOptionsComponent } from './main-options/main-options.component';
+import { MainUsersComponent } from './main-users/main-users.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { InscriptionComponent } from './inscription/inscription.component';
     LoginComponent,
     DescriptionComponent,
     InscriptionComponent,
+    MainComponent,
+    MainSelectionComponent,
+    MainOptionsComponent,
+    MainUsersComponent,
   ],
   imports: [
     BrowserAnimationsModule,
