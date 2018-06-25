@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
+import {Observable, of} from "rxjs/index";
+import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs/internal/operators";
+import {$} from "protractor";
+import * as domain from "domain";
 
 @Injectable({
   providedIn: 'root'
@@ -7,28 +12,35 @@ import {User} from "./user";
 export class UserService {
 
   users: User[];
+  dburl = "http://localhost:8080/"
 
-  constructor() {
+  constructor(private http: HttpClient) {
 
-    this.users = [
-      {
-        id: "0",
+  }
 
-        firstName: "abdel",
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.dburl + "user")
+      .pipe(
+        catchError(this.handleHerror('get users', []))
+      )
+  }
 
-        lastName: "le moine",
+  private handleHerror<T>(operation = "operation", result?: T){
+    return (error, any): Observable<T> =>{
+      console.log( operation + "failed:  " + error.message );
+      return of(result as T);
+    }
+  }
 
-        description: "je suis un utilisateur qualifié de cette application géniale",
 
-        email: "valerane@yahoo.fr",
 
-        mdp: "monSuperMotDePasse",
+  /*
 
-        domains: [],
+  - take an object { domains : list of selected domains, subdomains : list of selected subdomains }
+  - update the users list according to the given domains and subdomains list
 
-        subDomains: []
-
-      }
-    ]
+  */
+  updateUserList(domains_subDomains): Observable<any> {
+    return this.http.get(this.dburl + "/user", {params : {domain_subdomain: domains_subDomains}});
   }
 }

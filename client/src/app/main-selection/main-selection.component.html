@@ -13,7 +13,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-select placeholder="sous domains pour plus de précision" [formControl]="subDomains" multiple>
+    <mat-select placeholder="sous domains pour plus de précision" [formControl]="subDomains" multiple (ngModelChange)="subDomainsSelectedChanged()">
       <mat-select-trigger>
         {{subDomains.value ? subDomains.value[0] : ''}}
         <span *ngIf="subDomains.value?.length > 1" >

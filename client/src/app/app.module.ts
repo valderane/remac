@@ -2,9 +2,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 // material design
-import { MatToolbarModule, MatFormFieldModule, MatInputModule,
-          MatButtonModule, MatGridListModule, MatSelectModule } from '@angular/material';
+import {
+  MatToolbarModule, MatFormFieldModule, MatInputModule,
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule
+} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -16,6 +19,8 @@ import { MainComponent } from './main/main.component';
 import { MainSelectionComponent } from './main-selection/main-selection.component';
 import { MainOptionsComponent } from './main-options/main-options.component';
 import { MainUsersComponent } from './main-users/main-users.component';
+import { UserCardComponent } from './user-card/user-card.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,19 +34,23 @@ import { MainUsersComponent } from './main-users/main-users.component';
     MainSelectionComponent,
     MainOptionsComponent,
     MainUsersComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     CommonModule,
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

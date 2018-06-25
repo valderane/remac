@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DomainService} from "../shared/domain.service";
 import {FormControl} from "@angular/forms";
 import {Domain} from "../shared/domain";
@@ -9,6 +9,8 @@ import {Domain} from "../shared/domain";
   styleUrls: ['./main-selection.component.css']
 })
 export class MainSelectionComponent implements OnInit {
+
+  @Output() domainsChanges = new EventEmitter(); // for sharing domains and subdomains list
 
   private domainsList: Domain[]; // list of all domais available ( come from the server )
   private subDomainsList: string[]; // list of all subdomains (depending on the domain's choice )
@@ -23,6 +25,7 @@ export class MainSelectionComponent implements OnInit {
     this.domainService.getDomains().subscribe(domains => {
       this.domainsList = domains;
     });
+
   }
 
   changeSubDomainsList(): void { // modify de subDomains list when domains are modified
@@ -39,6 +42,14 @@ export class MainSelectionComponent implements OnInit {
       });
     });
 
+    this.domainsChanges.emit({domains: this.domains.value,
+                                    subDomains: this.subDomains.value});
+
+  }
+
+  subDomainsSelectedChanged(): void { // when the user actualize his subDomains list
+    this.domainsChanges.emit({domains: this.domains.value,
+      subDomains: this.subDomains.value});
   }
 
 }

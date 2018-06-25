@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const
+
 
 const DomainSchema = mongoose.Schema({
   Name: String,

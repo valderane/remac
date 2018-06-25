@@ -32,6 +32,20 @@ exports.findAll = (req, res) => {
   });
 };
 
+
+//retreive all users from the database according to domains and subdomains list
+exports.findByDomainSubdomain = (req, res) => {
+    console.log(req.params.domains_subdomains);
+    /*
+    User.find().then(users => {
+        res.json(users);
+    }).catch(err => {
+        res.status(500).send({
+            message:err.message || "cannot retreive users from the database"
+        });
+    }); */
+};
+
 //update a user with a specific id
 exports.update = (req, res) => {
 
@@ -82,3 +96,5 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+//find users with domains and subdomains

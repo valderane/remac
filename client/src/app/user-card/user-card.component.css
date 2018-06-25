@@ -1,6 +1,7 @@
-.user-list {
-  margin-left: 30%;
-  max-width: 50%;
+.user {
+  max-width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .example-header-image {
@@ -9,5 +10,5 @@
 }
 
 mat-card-title {
-  font-weight: bolder;
+  font-weight: bolder;;
 }

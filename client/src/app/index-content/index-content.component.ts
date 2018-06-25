@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../shared/user';
-import { Domain } from '../shared/domain';
-import { FormControl } from '@angular/forms';
+
 
 
 @Component({
