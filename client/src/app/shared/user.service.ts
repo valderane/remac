@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
 import {Observable, of} from "rxjs/index";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/internal/operators";
 import {$} from "protractor";
 import * as domain from "domain";
@@ -25,15 +25,6 @@ export class UserService {
       )
   }
 
-  private handleHerror<T>(operation = "operation", result?: T){
-    return (error, any): Observable<T> =>{
-      console.log( operation + "failed:  " + error.message );
-      return of(result as T);
-    }
-  }
-
-
-
   /*
 
   - take an object { domains : list of selected domains, subdomains : list of selected subdomains }
@@ -41,6 +32,21 @@ export class UserService {
 
   */
   updateUserList(domains_subDomains): Observable<any> {
-    return this.http.get(this.dburl + "/user", {params : {domain_subdomain: domains_subDomains}});
+
+    // Setup domain name parameter
+    let params = new HttpParams().set('domain', domains_subDomains.domains[0]);
+    
+    return this.http.get(this.dburl + "/user", {params : params});
+  }
+
+
+  /*
+  -handle error messages
+  */
+  private handleHerror<T>(operation = "operation", result?: T){
+    return (error, any): Observable<T> =>{
+      console.log( operation + "failed:  " + error.message );
+      return of(result as T);
+    }
   }
 }
