@@ -35,9 +35,15 @@ exports.findAll = (req, res) => {
 
 //retreive all users from the database according to domains and subdomains list
 exports.findByDomainSubdomain = (req, res) => {
-    console.log(req.params);
-    res.json({message: "ok"});
-    /*
+
+    User.find()
+        .elemMatch("domains", {$eq: req.params.domain})
+        .exec((err, users) => {
+            if(err) throw err;
+
+            res.json(users);
+        });
+            /*
     User.find().then(users => {
         res.json(users);
     }).catch(err => {

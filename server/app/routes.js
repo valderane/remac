@@ -14,7 +14,7 @@ module.exports = (app) => {
   app.post('/user', users.create);
   //get all users TODO : get users by domains and subdomains
   app.get('/user', users.findAll);
-  app.get('/user/:data', users.findByDomainSubdomain);
+  app.get('/user/:domain', users.findByDomainSubdomain);
   //update a specific
   app.put('/user/:id', users.update);
   //delete a specific

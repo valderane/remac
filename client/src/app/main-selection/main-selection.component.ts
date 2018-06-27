@@ -47,9 +47,13 @@ export class MainSelectionComponent implements OnInit {
 
   }
 
+  /*
+
   subDomainsSelectedChanged(): void { // when the user actualize his subDomains list
     this.domainsChanges.emit({domains: this.domains.value,
       subDomains: this.subDomains.value});
   }
+
+  */
 
 }

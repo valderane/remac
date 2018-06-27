@@ -27,16 +27,18 @@ export class UserService {
 
   /*
 
-  - take an object { domains : list of selected domains, subdomains : list of selected subdomains }
-  - update the users list according to the given domains and subdomains list
+  - take a domain list
+  - update the users list according to the given domain 
 
   */
-  updateUserList(domains_subDomains): Observable<any> {
+  userListByDomain(domain): Observable<User[]> {
 
-    // Setup domain name parameter
-    let params = new HttpParams().set('domain', domains_subDomains.domains[0]);
-    
-    return this.http.get(this.dburl + "/user", {params : params});
+    // Setup domain name parameter    
+    console.log(domain)
+    return this.http.get<User[]>(this.dburl + 'user/' + domain)
+    .pipe(
+      catchError(this.handleHerror('get params', []))
+    );
   }
 
 
