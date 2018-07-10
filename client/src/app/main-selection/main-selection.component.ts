@@ -41,9 +41,7 @@ export class MainSelectionComponent implements OnInit {
         }
       });
     });
-
-    this.domainsChanges.emit({domains: this.domains.value,
-                                    subDomains: this.subDomains.value});
+    this.domainsChanges.emit(this.domains.value);
 
   }
 
@@ -55,5 +53,4 @@ export class MainSelectionComponent implements OnInit {
   }
 
   */
-
 }

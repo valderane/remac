@@ -1,13 +1,13 @@
 
 <div class="container">
 
-<div class="sort-container">
-  <app-main-selection (domainsChanges)="updateUserList($event)"></app-main-selection>
-</div>
+  <div class="sort-container">
+    <app-main-selection (domainsChanges)='updateUserList($event)'></app-main-selection>
+  </div>
 
-<div>
-  <app-main-users [users]="users"></app-main-users>
-</div>
+  <div>
+    <app-main-users [users]="users"></app-main-users>
+  </div>
 
 
 </div>

@@ -1,4 +1,5 @@
 <mat-toolbar color="primary" class="tool-bar-style">
     <span class="title">{{title}}</span>
-    <app-login></app-login>
+    <app-login (succesConnexion)="changeHeader()" style="margin-left: 50%;"  *ngIf="!change" ></app-login>
+    <button mat-button class="deconnexion" *ngIf="change" (click)="deconnexion()"  >deconnexion</button>
 </mat-toolbar>

@@ -10,7 +10,9 @@ export class User {
 
     email: string;
 
-    mdp: string;
+    password: string;
+
+    status: String;
 
     domains: string[];
 

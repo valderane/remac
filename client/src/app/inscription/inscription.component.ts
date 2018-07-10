@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../shared/user';
 import { Domain } from '../shared/domain';
 import { FormControl } from '@angular/forms';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-inscription',
@@ -16,6 +17,7 @@ export class InscriptionComponent implements OnInit {
 
   private user: User; // new user's configs
   private mdp: string; // confirm mdp variable
+  private mdpValid: boolean;
   private domainsList: Domain[]; // list of all domais available ( come from the server )
   private subDomainsList: string[]; // list of all subdomains (depending on the domain's choice )
 
@@ -23,7 +25,7 @@ export class InscriptionComponent implements OnInit {
   private domains = new FormControl(); // selected domains
   private subDomains = new FormControl(); // selected sub domains
 
-  constructor() { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
 
@@ -64,13 +66,26 @@ export class InscriptionComponent implements OnInit {
 
   }
 
+  compareMdp(){
+    this.mdpValid = ( this.user.password === this.mdp );
+  }
+
   submit(): void {
-    for (const key in this.user) {
-      if (this.user.hasOwnProperty(key)) {
-        console.log(true);
-      }
+
+    if(!this.mdpValid){
+      //passwords didn't match
+      console.log("wrong password");
     }
-    console.log(this.user);
+    else{
+      //register the customer
+      this.userService.createAccount(this.user).then((result) => {
+        console.log(result);
+      }, (err) => {
+        console.log(err);
+      });
+
+    }
+
   }
 
   changeSubDomainsList(): void { // modify de subDomains list when domains are modified

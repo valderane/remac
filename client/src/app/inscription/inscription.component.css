@@ -1,3 +1,27 @@
 .form-div > form > mat-form-field {
-    width: 80%;
+    width: 90%;
+    color: #f5f0ef;
+    text-align: center;
 }
+
+.form-div{
+    background: #faf7f2;
+    border: 1px solid rgb(166, 255, 0);
+    border-radius: 5px;
+    color: #2e2827;
+    width: 70%;
+}
+
+button{
+    text-align: center; 
+    width: 90%;
+    background: #147a21;
+    color: #fcf8f7;
+    font-size: 110%;
+}
+
+.form-div > form > * {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+

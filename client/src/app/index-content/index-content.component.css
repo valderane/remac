@@ -5,10 +5,18 @@
 }
 
 .description-div {
-    width: 65%;
+    width: 40%;
     position: absolute;
-    top: 0%;
-    left: 0%;
+    top: 30%;
+    left: 20%;
+   
+}
+
+.index-div {
+    position: relative; 
+    top: 0px;
+    background: yellowgreen;
+    padding-top: 10%;
 }
 
 

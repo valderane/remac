@@ -14,23 +14,62 @@ export class MainComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.getAllUsers();
+  }
+
+
+
+
+
+  /* take all the users */
+  getAllUsers() {
     this.userService.getUsers().subscribe(users => {
       this.users = users;
     });
   }
 
-  updateUserList(domains_subDomains) {
-    this.userService.userListByDomain(domains_subDomains.domains[0]).subscribe(users => {
-      this.users = users;
+
+  /*
+  -take a domain
+  -return a list of people that have this domain on their domain list
+  */
+  userListByDomain(domain) {
+    this.userService.userListByDomain(domain).subscribe(users => {
+      this.addToUsers(users);
     });
   }
+
+
+
+
+  /*
+  update the users list depending on the selection of domains
+  */
+ 
+  updateUserList(event) {
+    let domains = event;
+    console.log(domains);
+     //empty the users list before filling it
+    if( typeof domains !== 'undefined' && domains.length > 0){
+      this.users = [];
+      //if the list of domains list if not empty ...
+      domains.forEach(domain => {
+        this.userListByDomain(domain);
+      });
+    }
+    else{
+      //if not , take the default list
+      this.getAllUsers();
+    }
+  }
+ 
+
 
   /*
   - take a user list (result of a request)
   - add it to the local users variable (for distincts values)
 
   */
-
   addToUsers(anotherUsersList): void {
     anotherUsersList.forEach(user => {
       //check if the user is already in the users array, if not add him 

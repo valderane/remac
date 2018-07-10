@@ -6,8 +6,17 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    background: #70a154 ;
+    color: #ddecd4
 }
 
 .title {
-    font-size: 100%;
+    font-size: 130%;
+    color: #e9f8a7;
+}
+
+.deconnexion {
+    background: #44ad06;
+    margin-left: 70%;
+
 }

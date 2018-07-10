@@ -1,6 +1,6 @@
 <div class="form-div">
 
-    <h2>Inscription</h2>
+    <h2 style="text-align: center">Inscription</h2>
     <form (submit)="submit()">
 
       <mat-form-field>
@@ -22,13 +22,13 @@
       <br>
 
       <mat-form-field>
-        <input matInput type="password" placeholder="mot de passe" [(ngModel)]="user.mdp" name="mdp" required>
+        <input matInput type="password" placeholder="mot de passe" [(ngModel)]="user.password" name="mdp" required>
       </mat-form-field>
 
       <br>
       
       <mat-form-field>
-        <input matInput type="password" placeholder="confirmer le mot de passe" [(ngModel)]="mdp" name="cmdp" required>
+        <input matInput type="password" placeholder="confirmer le mot de passe" [(ngModel)]="mdp" name="cmdp" (input)="compareMdp()" required>
       </mat-form-field>
 
       <br>
@@ -69,8 +69,9 @@
 
       <br>
    
-      <button mat-button type="submit">S'inscrire</button>
-     
+      <button mat-button type="submit" routerLink="/main" >S'inscrire</button>
+      
+      <br><br><br><br>
       
     </form>
   </div>

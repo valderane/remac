@@ -21,6 +21,8 @@ import { MainOptionsComponent } from './main-options/main-options.component';
 import { MainUsersComponent } from './main-users/main-users.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { AuthGuardService } from './shared/auth-guard.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { AppRoutingModule } from './/app-routing.module';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    HttpModule,
     CommonModule,
     MatToolbarModule,
     MatFormFieldModule,
