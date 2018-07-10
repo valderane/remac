@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { User } from '../shared/user';
 import { Domain } from '../shared/domain';
 import { FormControl } from '@angular/forms';
 import { UserService } from '../shared/user.service';
+import { Router } from '@angular/router';
+import { headersToString } from 'selenium-webdriver/http';
+import { HeaderService } from '../shared/header.service';
 
 @Component({
   selector: 'app-inscription',
@@ -25,7 +28,7 @@ export class InscriptionComponent implements OnInit {
   private domains = new FormControl(); // selected domains
   private subDomains = new FormControl(); // selected sub domains
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService, public router: Router, public headerService: HeaderService) { }
 
   ngOnInit() {
 
@@ -79,7 +82,8 @@ export class InscriptionComponent implements OnInit {
     else{
       //register the customer
       this.userService.createAccount(this.user).then((result) => {
-        console.log(result);
+        this.headerService.updateChange(true);
+        this.router.navigate(['/main']);
       }, (err) => {
         console.log(err);
       });

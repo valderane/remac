@@ -11,8 +11,11 @@
 }
 
 .title {
-    font-size: 130%;
+    font-size: 170%;
     color: #e9f8a7;
+    margin-left: 10%;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .deconnexion {
