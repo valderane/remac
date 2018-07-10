@@ -37,7 +37,7 @@ exports.findAll = (req, res) => {
 exports.findByDomainSubdomain = (req, res) => {
 
     User.find()
-        .elemMatch("domain", {$eq: req.params.domain})
+        .elemMatch("domains", {$eq: req.params.domain})
         .exec((err, users) => {
             if(err) throw err;
 

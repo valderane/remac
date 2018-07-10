@@ -5,7 +5,10 @@ contient les scripts du serveur et les echanges avec l'application
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const logger = require("morgan"); // pour un debuggage plus facile
+const cors = require('cors'); 
 const dbConfig = require("./config/db.config");
+
 
 //create a new app
 const app = express();
@@ -18,6 +21,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(logger('dev')); // Log requests to API using morgan
+app.use(cors());
 
 
 //connecting to the database
@@ -36,8 +41,11 @@ app.get('/', (req, res) => {
 });
 
 require('./app/routes')(app);
+require('./app/authRoutes')(app);
+
+var port = process.env.PORT || 5000;
 
 // listen for requests
-app.listen(8080, () => {
-    console.log("Server is listening on port 8080");
+app.listen(port, () => {
+    console.log("Server is listening on port "+port);
 });
