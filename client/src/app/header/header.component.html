@@ -1,9 +1,16 @@
 <mat-toolbar color="primary" class="tool-bar-style">
+
     <span class="title">{{title}}</span>
+
     <app-login (succesConnexion)="changeHeader()" style="margin-left: 50%;"  *ngIf="!(change)" ></app-login>
 
+    <div *ngIf="change" mat-card-avatar class="example-header-image" ></div>
+
     <div *ngIf="change">
-        <span  >{{currentUser.firstName}}</span>
+        <button mat-button  >{{currentUser.firstName}}</button>
+        <button mat-button  >Accueil</button>
+        <button mat-button  >Messagerie</button>
+        <button mat-button  >Events</button>
     </div>
 
     <button mat-button class="deconnexion" *ngIf="change" (click)="deconnexion()"  >deconnexion</button>

@@ -9,5 +9,11 @@
     <app-main-users [users]="users"></app-main-users>
   </div>
 
+  <mat-paginator [length]="pageLenght"
+    [pageSize]="pageSize"
+    [pageSizeOptions]=""
+    (page)="pagination($event)">
+  </mat-paginator>
+
 
 </div>

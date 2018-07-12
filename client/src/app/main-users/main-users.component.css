@@ -1,6 +1,11 @@
 .user-list {
-  margin-left: 30%;
+  margin-left: 25%;
   max-width: 50%;
+}
+
+div{
+  width:50%;
+  margin-left: 25%;
 }
 
 .example-header-image {
@@ -10,4 +15,8 @@
 
 mat-card-title {
   font-weight: bolder;
+}
+
+app-user-card {
+  width:50%;
 }

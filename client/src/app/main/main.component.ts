@@ -11,14 +11,15 @@ export class MainComponent implements OnInit {
 
   users: User[]; //list of users
 
+  pageSize: Number = 5; // nombre d'elts d'une page de pagination
+  pageIndex: Number = 1; // index de la page courante
+  pageLenght: Number = 100; // nbr total de pages
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.getAllUsers();
   }
-
-
-
 
 
   /* take all the users */
@@ -79,6 +80,15 @@ export class MainComponent implements OnInit {
 
       }
     });
+  }
+
+
+  /**
+   * manage pagination of users 
+   * @param event contain pagination index
+   */
+  pagination(event) {
+    this.pageIndex = event.pageIndex;
   }
 
 }

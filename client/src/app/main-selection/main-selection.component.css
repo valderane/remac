@@ -1,0 +1,17 @@
+form > * {
+    margin-left: 5%;
+}
+
+form {
+    margin-left: 25%;
+}
+
+mat-form-field {
+    width: 50%;
+    text-align: center;
+    
+}
+
+div {
+    background: rgb(216, 241, 144); 
+}

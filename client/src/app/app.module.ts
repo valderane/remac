@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // material design
 import {
   MatToolbarModule, MatFormFieldModule, MatInputModule,
-  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { HttpModule } from '@angular/http';
+import { ProfilComponent } from './profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HttpModule } from '@angular/http';
     MainOptionsComponent,
     MainUsersComponent,
     UserCardComponent,
+    ProfilComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -46,10 +48,12 @@ import { HttpModule } from '@angular/http';
     CommonModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
     MatCardModule,
+    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,

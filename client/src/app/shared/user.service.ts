@@ -30,7 +30,6 @@ export class UserService {
  
         //Load token if exists
         this.token = localStorage.getItem('token');
-        console.log(this.token);
         let headers = new Headers();
 
         headers.append('Content-Type', 'application/json');
@@ -110,7 +109,14 @@ export class UserService {
 
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.dburl + "user")
+
+    this.token = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer '+this.token );
+
+    return this.http.get<User[]>(this.dburl + "user", {headers: headers})
       .pipe(
         catchError(this.handleHerror('get users', []))
       )
@@ -124,8 +130,14 @@ export class UserService {
   */
   userListByDomain(domain): Observable<User[]> {
 
+    this.token = localStorage.getItem('token');
+    let headers = new HttpHeaders();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer '+this.token );
+
     // Setup domain name parameter    
-    return this.http.get<User[]>(this.dburl + 'user/' + domain)
+    return this.http.get<User[]>(this.dburl + 'user/' + domain, {headers: headers})
     .pipe(
       catchError(this.handleHerror('get params', []))
     );

@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { HeaderService } from '../shared/header.service';
 import { User } from '../shared/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+
 
 @Component({
   selector: 'app-header',
@@ -13,10 +16,12 @@ export class HeaderComponent implements OnInit {
 
   title = 'remac';
   change:boolean = false;
+  userUpdated:boolean = false;
   //change2: boolean =  false;
   currentUser: User = new User();
 
-  constructor(public userService: UserService, public router: Router, public headerService: HeaderService) {
+  constructor(public userService: UserService, public router: Router, 
+              public headerService: HeaderService) {
   }
 
   ngOnInit() {
@@ -28,8 +33,15 @@ export class HeaderComponent implements OnInit {
 
     this.headerService.currentUser$.subscribe((user)=>{ // une fois connecté, récuperer les données de l'utilisateur
       this.currentUser = user;
+      this.userUpdated = true;
     });
 
+    //si l'utilisateur recharge la page, recuperer l'utilisateur coureant dans le token sauvegardé
+    if(!this.userUpdated){
+      const helper = new JwtHelperService();
+      this.currentUser = helper.decodeToken(localStorage.getItem('token'));
+    }
+    
   }
 
   changeHeader(){
