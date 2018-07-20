@@ -46,6 +46,41 @@ require('./app/authRoutes')(app);
 var port = process.env.PORT || 5000;
 
 // listen for requests
-app.listen(port, () => {
+var server = app.listen(port, () => {
     console.log("Server is listening on port "+port);
+});
+
+
+
+
+var convCtrl = require('./app/controllers/conversation')
+
+const io = require('socket.io').listen(server);
+
+//gerer les appels en temps reel du client
+io.on('connection', (socket) => {
+    console.log('someone connected');
+
+    socket.on('disconnect', () => {
+        console.log('ciao !');
+    });
+
+    socket.on('init-conv', (data) => {
+        // connecter l'utilisateur aux 2 rooms corresp a son id et a celui de son interlocuteur
+        var conv = data.conv;
+        socket.join( conv );
+
+        //la conv existe dans la bdd ? renvoyer les msg correspondants : creer une nouvelle et la stocker
+
+    });
+
+    socket.on('msg', data => {
+        var msgInfos = data.msgInfos,
+            conv = data.conv;
+
+        convCtrl.saveMsg(conv, msgInfos);
+
+        socket.to(conv).emit('recieve', {msg: msgInfos});
+    });
+
 });

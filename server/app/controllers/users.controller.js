@@ -1,5 +1,7 @@
 const User = require('../modeles/user.model.js') ;
 
+var userSet = new Set();
+
 exports.create = (req, res) => {
   //create a new user (la verification des données est faite coté client)
   const user = new User({
@@ -24,7 +26,7 @@ exports.create = (req, res) => {
 //retreive all users from the database
 exports.findAll = (req, res) => {
   User.find().then(users => {
-    res.json(users);
+    res.send(users);
   }).catch(err => {
     res.status(500).send({
       message:err.message || "cannot retreive users from the database"
@@ -104,4 +106,57 @@ exports.delete = (req, res) => {
     });
 };
 
-//find users with domains and subdomains
+/**
+ * count all users
+ */
+exports.countUsers = (req, res) => {
+    User.find().then(users => {
+      res.json({nbrUsers: users.length});
+    }).catch(err => {
+      res.status(500).send({
+        message:err.message || "cannot count users"
+      });
+    });
+  };
+
+/**
+ * count users by domain
+ */
+exports.countUsersByDomain = (req, res) => {
+
+    var domains = req.query.domains;
+    var subDomains = req.query.subDomains;    
+ 
+    User.find({$or: [ {domains: {$in: domains}},
+        {subDomains: {$in: subDomains}}  
+     ]})
+    .exec((err, users) => {
+
+        if(err) throw err;
+
+        res.json({nbr: users.length});
+
+    });
+
+}
+
+exports.getUsersByDomainSubdomain = (req, res) => {
+    var domains = req.query.domains;
+    var subDomains = req.query.subDomains;  
+    var index = req.query.index;
+    var pageLength = req.query.pageLength;
+    
+    User.find({$or: [ {domains: {$in: domains}},
+        {subDomains: {$in: subDomains}}  
+     ]})
+     .skip(pageLength * index)
+     .limit(pageLength * 1)
+    .exec((err, users) => {
+
+        if(err) throw err;
+
+        res.json(users);
+
+    });
+
+}

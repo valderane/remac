@@ -9,37 +9,28 @@ import {UserService} from "../shared/user.service";
 })
 export class MainComponent implements OnInit {
 
-  users: User[]; //list of users
+  users: User[] = []; //list of users
 
-  pageSize: Number = 5; // nombre d'elts d'une page de pagination
-  pageIndex: Number = 1; // index de la page courante
-  pageLenght: Number = 100; // nbr total de pages
+  pageSize: number = 5; // nombre d'elts d'une page de pagination
+  pageIndex: number = 0; // index de la page courante
+  pageLenght: number = 10; // nbr total de pages
+  eventUpdateDetails: any;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.getAllUsers();
+    this.users = [];
   }
 
 
   /* take all the users */
   getAllUsers() {
-    this.userService.getUsers().subscribe(users => {
+    this.userService.getUsers().then((users:any) => {
       this.users = users;
+    }, err => {
+      console.log(err);
     });
   }
-
-
-  /*
-  -take a domain
-  -return a list of people that have this domain on their domain list
-  */
-  userListByDomain(domain) {
-    this.userService.userListByDomain(domain).subscribe(users => {
-      this.addToUsers(users);
-    });
-  }
-
 
 
 
@@ -48,47 +39,61 @@ export class MainComponent implements OnInit {
   */
  
   updateUserList(event) {
-    let domains = event;
-    console.log(domains);
+    let tableaux = event
+    let domains = event.domains;
+    this.eventUpdateDetails = event;
      //empty the users list before filling it
     if( typeof domains !== 'undefined' && domains.length > 0){
       this.users = [];
-      //if the list of domains list if not empty ...
-      domains.forEach(domain => {
-        this.userListByDomain(domain);
+
+      //nbr d'occurences 
+      this.userService.countUsers(tableaux).then((data: any) => {
+        this.pageLenght = Math.round(data.nbr / this.pageSize);
+        console.log(this.pageLenght);
+        this.pageIndex = 0;
+
+        //recuperer les elts de la première page
+        tableaux.pageLength = this.pageSize;
+        tableaux.index = this.pageIndex;
+        this.userService.getUsersByDomainSubDomain(tableaux).then((data: any) => {
+          this.users = data;
+        }, err => {
+          console.log(err);
+          
+        });
+
+      }, err => {
+        console.log(err);
       });
+
+      
+
     }
     else{
       //if not , take the default list
-      this.getAllUsers();
+      this.users = [];
     }
   }
  
-
-
-  /*
-  - take a user list (result of a request)
-  - add it to the local users variable (for distincts values)
-
-  */
-  addToUsers(anotherUsersList): void {
-    anotherUsersList.forEach(user => {
-      //check if the user is already in the users array, if not add him 
-      if( !( this.users.indexOf(user) > -1 ) ){
-
-        this.users.push(user);
-
-      }
-    });
-  }
 
 
   /**
    * manage pagination of users 
    * @param event contain pagination index
    */
-  pagination(event) {
+  pageEvent(event) {
+
     this.pageIndex = event.pageIndex;
+
+    this.eventUpdateDetails.pageIndex = this.pageIndex;
+    this.userService.getUsersByDomainSubDomain(this.eventUpdateDetails).then((data: any) => {
+      this.users = data;
+    }, err => {
+      console.log(err);
+          
+    });
+    
+    
   }
 
 }

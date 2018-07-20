@@ -24,6 +24,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { HttpModule } from '@angular/http';
 import { ProfilComponent } from './profil/profil.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ProfilComponent } from './profil/profil.component';
     MainUsersComponent,
     UserCardComponent,
     ProfilComponent,
+    ConversationComponent,
   ],
   imports: [
     BrowserAnimationsModule,

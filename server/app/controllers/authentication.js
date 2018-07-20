@@ -14,7 +14,12 @@ function setUserInfo(request){
     return {
         _id: request._id,
         email: request.email,
-        status: request.status
+        status: request.status,
+        firstName: request.firstName,
+        lastName: request.lastName,
+        domains: request.domains,
+        subDomains: request.subDomains
+        // TODO ajouter des trucs
     };
 }
  

@@ -41,16 +41,20 @@ export class MainSelectionComponent implements OnInit {
         }
       });
     });
-    this.domainsChanges.emit(this.domains.value);
+    
+    this.domainsChanges.emit({
+      domains: this.domains.value || [],
+      subdomains: this.subDomains.value || []
+    });
 
   }
 
-  /*
 
-  subDomainsSelectedChanged(): void { // when the user actualize his subDomains list
-    this.domainsChanges.emit({domains: this.domains.value,
-      subDomains: this.subDomains.value});
+  subDomainsSelectedChanged() { // when the user actualize his subDomains list
+    this.domainsChanges.emit({
+      domains: this.domains.value || [],
+      subdomains: this.subDomains.value || []
+    });
   }
-
-  */
+  
 }

@@ -4,6 +4,8 @@ import {Observable, of} from "rxjs/index";
 import {HttpClient, HttpParams, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/internal/operators";
 import { Headers, Http} from '@angular/http';
+import { promise } from 'protractor';
+import { resolve } from 'path';
 
 
 @Injectable({
@@ -108,19 +110,74 @@ export class UserService {
 
 
 
-  getUsers(): Observable<User[]> {
+  getUsers() {
 
-    this.token = localStorage.getItem('token');
-    let headers = new HttpHeaders();
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      let headers = new Headers();
+  
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', 'Bearer '+this.token );
+  
+      return this.hp.get(this.dburl + "user", {headers: headers})
+                    .subscribe((data: any) => {
+                      data = data.json();
+                      resolve(data);
+                    }, (err) => {
+                      reject(err);
+                    })
+      
+    });
 
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'Bearer '+this.token );
-
-    return this.http.get<User[]>(this.dburl + "user", {headers: headers})
-      .pipe(
-        catchError(this.handleHerror('get users', []))
-      )
   }
+
+  /**
+   * 
+   */
+  getUsersByDomainSubDomain(tableaux) {
+
+    return new Promise((resolve, reject) => {
+
+      this.token = localStorage.getItem('token');
+      let headers = new Headers();
+  
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', 'Bearer '+this.token );
+
+      this.hp.get(this.dburl + 'getUsersByDomainSubdomain', {headers: headers, params: tableaux}).subscribe(data => {
+        resolve(data.json());
+      }, err => {
+        reject(err);
+      })
+
+    });
+    
+  }
+
+  /**
+   * 
+   */
+  countUsers(tableaux) {
+
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      let headers = new Headers();
+  
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', 'Bearer '+this.token );
+  
+      return this.hp.get(this.dburl + "userDomainNbr", {headers: headers, params: tableaux } )
+                    .subscribe((data: any) => {
+                      data = data.json();
+                      resolve(data);
+                    }, (err) => {
+                      reject(err);
+                    })
+      
+    });
+
+  }
+
 
   /*
 
@@ -128,16 +185,16 @@ export class UserService {
   - update the users list according to the given domain 
 
   */
-  userListByDomain(domain): Observable<User[]> {
+  userListByDomain(domain): any{
 
     this.token = localStorage.getItem('token');
-    let headers = new HttpHeaders();
+    let headers = new Headers();
 
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer '+this.token );
 
     // Setup domain name parameter    
-    return this.http.get<User[]>(this.dburl + 'user/' + domain, {headers: headers})
+    return this.hp.get(this.dburl + 'user/' + domain, {headers: headers})
     .pipe(
       catchError(this.handleHerror('get params', []))
     );
