@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {User} from "./user";
-import {Observable, of} from "rxjs/index";
+import {Observable, of} from "rxjs";
 import {HttpClient, HttpParams, HttpHeaders} from "@angular/common/http";
 import {catchError} from "rxjs/internal/operators";
 import { Headers, Http} from '@angular/http';
 import { promise } from 'protractor';
 import { resolve } from 'path';
+import {  MatSnackBar } from '@angular/material';
 
 
 @Injectable({
@@ -16,8 +17,9 @@ export class UserService {
   users: User[];
   dburl = "http://localhost:5000/";
   token: any;
+  inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
 
-  constructor(private http: HttpClient, public hp: Http) {
+  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar) {
     
   }
 
@@ -36,9 +38,6 @@ export class UserService {
 
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Bearer '+this.token );
-        console.log(this.token);
-
-        console.log(headers);
         
         this.hp.get(this.dburl + 'api/auth/protected', {headers: headers})
             .subscribe(res => {
@@ -67,9 +66,15 @@ export class UserService {
         this.http.post<any>(this.dburl + 'api/auth/register', details, {headers: headers})
           .subscribe(res => {
             let data = res
+            /*
             this.token = data.token;
             localStorage.setItem('token', this.token);
             resolve(data);
+            */
+
+            /* prevenir le client qu'il doit vérifier son email */
+            this.snackBar.open(this.inscriptionOk, "ok", {duration: 10000});
+
  
           }, (err) => {
             reject(err);

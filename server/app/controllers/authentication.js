@@ -1,11 +1,25 @@
 var jwt = require('jsonwebtoken'); 
 var User = require('../modeles/user.model');
 var authConfig = require('../../config/auth');
+var random = require('../random');
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
+
+//=============================================================
+//           fonctions auxiliaires
+//=============================================================
 
 //create a token based on user infos
 function generateToken(user){
     return jwt.sign(user, authConfig.secret, {
         expiresIn: 10080
+    });
+}
+
+//create a token based on user id for verifying email
+function generateEmailToken(id){
+    return jwt.sign({id: id}, authConfig.secret, {
+        expiresIn: 6*60*60
     });
 }
 
@@ -18,10 +32,30 @@ function setUserInfo(request){
         firstName: request.firstName,
         lastName: request.lastName,
         domains: request.domains,
-        subDomains: request.subDomains
+        subDomains: request.subDomains,
+        pays: request.pays,
+        ville: request.ville,
+        active: request.active
         // TODO ajouter des trucs
     };
 }
+
+//=============================================================
+//           initialisation du mailer
+//=============================================================
+
+var smtpTransport = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    auth: {
+        type: "login",
+        user: "camer.remac@gmail.com",
+        pass: "remacremac"
+    }
+});
+
+//=============================================================
+//           fonctions d'authentification
+//=============================================================
  
 exports.login = function(req, res, next){
  
@@ -88,11 +122,24 @@ exports.register = function(req, res, next){
             
             //if everything is fine, send token to the user 
             var userInfo = setUserInfo(user);
- 
-            res.status(201).json({
-                token: generateToken(userInfo),
-                user: userInfo
-            })
+
+            //demander confirmation de l'email
+            var link = "http://localhost:5000/verify_email?token="+generateEmailToken(user._id),
+                mailOptions = {
+                    to: user.email,
+                    subject: "Confirmer son adresse email",
+                    html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>"
+                } ;
+
+                smtpTransport.sendMail(mailOptions, function(error, response){
+                    if(error){
+                        console.log("error");
+                       res.send("error");
+                    }else{
+                        console.log("Message sent: " + response.message);
+                       res.send("sent");
+                    }
+               });
  
         });
  

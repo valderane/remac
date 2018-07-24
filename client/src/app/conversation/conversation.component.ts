@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-conversation',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConversationComponent implements OnInit {
 
+  @Input() convId: string; // id de la conversation à afficher
+
   constructor() { }
 
   ngOnInit() {
+    //recuperation de la conversation en question
+
   }
 
 }

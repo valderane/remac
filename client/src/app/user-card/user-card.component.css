@@ -12,3 +12,7 @@
 mat-card-title {
   font-weight: bolder;;
 }
+
+button {
+  background: #DDDDDD;
+}

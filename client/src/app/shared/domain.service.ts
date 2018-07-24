@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Domain } from "../shared/domain";
-import {Observable, of} from "rxjs/index";
+import { Domain } from "./domain";
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: "root",

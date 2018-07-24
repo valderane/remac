@@ -1,6 +1,5 @@
 const User = require('../modeles/user.model.js') ;
-
-var userSet = new Set();
+var jwt = require('jsonwebtoken'); 
 
 exports.create = (req, res) => {
   //create a new user (la verification des données est faite coté client)
@@ -106,6 +105,18 @@ exports.delete = (req, res) => {
     });
 };
 
+exports.deleteAll = (req, res) => {
+    User.remove({}).then(users => {
+        res.json({
+            message: "every users removed"
+        }, error => {
+            res.send({
+                error: "impossible de tout supprimer"
+            })
+        })
+    })
+}
+
 /**
  * count all users
  */
@@ -149,8 +160,8 @@ exports.getUsersByDomainSubdomain = (req, res) => {
     User.find({$or: [ {domains: {$in: domains}},
         {subDomains: {$in: subDomains}}  
      ]})
-     .skip(pageLength * index)
-     .limit(pageLength * 1)
+    // .skip(pageLength * index)
+    // .limit(pageLength * 1)
     .exec((err, users) => {
 
         if(err) throw err;
@@ -160,3 +171,30 @@ exports.getUsersByDomainSubdomain = (req, res) => {
     });
 
 }
+
+exports.verifyEmail = (req, res) => {
+    let token = req.query.token;
+
+    let decodedToken = jwt.decode(token, {complete: true});
+    let date = new Date();
+
+    if(decodedToken.exp < date.getTime()){
+        //token expiré ?
+        res.end("désolé, ce lien a expiré.")
+    }
+    else{
+        let id = decodedToken.payload.id
+        
+        User.findByIdAndUpdate(id, {active: true}).then( user => {
+            res.status(200).sendFile(__dirname+'/email.html');
+        }, err => {
+            res.send("une erreur s'est produite lors de la vérification de l'email");
+        });
+        
+
+
+    }
+
+   
+}
+

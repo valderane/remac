@@ -82,8 +82,9 @@ export class InscriptionComponent implements OnInit {
     else{
       //register the customer
       this.userService.createAccount(this.user).then((result) => {
-        this.headerService.updateChange(true);
-        this.router.navigate(['/main']);
+        //this.headerService.updateChange(true);
+        //this.router.navigate(['/main']);
+        console.log(result);
       }, (err) => {
         console.log(err);
       });

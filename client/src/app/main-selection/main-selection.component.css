@@ -6,10 +6,17 @@ form {
     margin-left: 25%;
 }
 
-mat-form-field {
+#seachInput {
     width: 50%;
     text-align: center;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    height: 25px;
     
+}
+
+form[_ngcontent-c7] > *[_ngcontent-c7] {
+    margin-left: 0%;
 }
 
 div {

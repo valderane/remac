@@ -2,6 +2,19 @@
 
 <form>
 
+    <input id="seachInput" placeholder="entrer un secteur d'activité..."  type="text" [formControl]="domains" [matAutocomplete]="auto">
+
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+          {{ option.name }}
+        </mat-option>
+    </mat-autocomplete>
+
+    <button mat-button (click)="seach()">rechercher</button>
+
+
+    
+<!-- 
   <mat-form-field>
     <mat-select placeholder="selectionner un domaine professionnel" [formControl]="domains" (ngModelChange)="changeSubDomainsList();" multiple>
       <mat-select-trigger>
@@ -26,6 +39,10 @@
       <mat-option *ngFor="let subdomain of subDomainsList" [value]="subdomain" >{{subdomain}}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  -->
+
+
 
 </form>
 

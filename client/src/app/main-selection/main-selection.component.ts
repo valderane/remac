@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DomainService} from "../shared/domain.service";
 import {FormControl} from "@angular/forms";
 import {Domain} from "../shared/domain";
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-selection',
@@ -9,6 +11,7 @@ import {Domain} from "../shared/domain";
   styleUrls: ['./main-selection.component.css']
 })
 export class MainSelectionComponent implements OnInit {
+  
 
   @Output() domainsChanges = new EventEmitter(); // for sharing domains and subdomains list
 
@@ -19,13 +22,33 @@ export class MainSelectionComponent implements OnInit {
   private domains = new FormControl(); // selected domains
   private subDomains = new FormControl(); // selected sub domains
 
+  private filteredOptions: Observable<Domain[]>;
+
   constructor(private domainService:DomainService) { }
 
   ngOnInit() {
-    this.domainService.getDomains().subscribe(domains => {
+    this.domainService.getDomains().subscribe(domains => { // recup de la liste totale des domaines
       this.domainsList = domains;
     });
 
+    this.filteredOptions = this.domains.valueChanges // appelée pour filter les resultats lors de l'autocompletion
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+
+  }
+
+  private _filter(value: string): Domain[] { // filtre les options d'autocompletion
+    const filterValue = value.toLowerCase();
+    return this.domainsList.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  seach() {
+    this.domainsChanges.emit({
+      domains: [this.domains.value] || [],
+      subdomains: this.subDomains.value || []
+    });
   }
 
   changeSubDomainsList(): void { // modify de subDomains list when domains are modified
@@ -56,5 +79,7 @@ export class MainSelectionComponent implements OnInit {
       subdomains: this.subDomains.value || []
     });
   }
+
+  
   
 }

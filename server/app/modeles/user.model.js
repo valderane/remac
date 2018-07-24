@@ -8,6 +8,10 @@ const UserSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
   description: String,
+  active: {
+      type: Boolean,
+      default: false
+  },
   email:{
     type: String,
     //unique: true,

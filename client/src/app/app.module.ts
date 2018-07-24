@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // material design
 import {
-  MatToolbarModule, MatFormFieldModule, MatInputModule,
-  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule
+  MatToolbarModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule,
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatSnackBarModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -20,11 +20,11 @@ import { MainSelectionComponent } from './main-selection/main-selection.componen
 import { MainOptionsComponent } from './main-options/main-options.component';
 import { MainUsersComponent } from './main-users/main-users.component';
 import { UserCardComponent } from './user-card/user-card.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { AuthGuardService } from './shared/auth-guard.service';
+import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { ProfilComponent } from './profil/profil.component';
 import { ConversationComponent } from './conversation/conversation.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +59,8 @@ import { ConversationComponent } from './conversation/conversation.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
     AppRoutingModule
   ],
   providers: [],
