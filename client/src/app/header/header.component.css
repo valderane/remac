@@ -5,28 +5,41 @@
     top: 0; /* Sets the sticky toolbar to be on top */
     left: 0;
     width: 100%;
+    height: 10%;
     z-index: 2;
-    background: #70a154 ;
-    color: #ddecd4;
+    background: #0596DE ;
+    color: #ffffff;
 }
 
 .title {
-    font-size: 170%;
-    color: #e9f8a7;
-    margin-left: 10%;
+    font-size: 200%;
+    color: #ffffff;
+    margin-top: 5px;
+    visibility: hidden;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.logo {
+    margin-left: 25%;
+}
+
 .deconnexion {
-    background: #44ad06;
-    margin-left: 5%;
+    background: #5DBCEB;
+    margin-left: 10px;
+    border-radius: 4px
 }
 
 
 .example-header-image {
     background-image: url('https://st.depositphotos.com/1779253/5140/v/950/depositphotos_51404241-stock-illustration-female-profile-avatar-icon-white.jpg');
     background-size: cover;
-    margin-right: 1%;
+    margin-right: 2px;
     margin-left: 30%;
   }
+
+.mat-button.mon_profil {
+    padding-left: 0px;
+    padding-right: 30px;
+    min-width: 20px;
+}

@@ -1,5 +1,7 @@
 <mat-toolbar color="primary" class="tool-bar-style">
 
+    <span > <img src="../../assets/logo/logo_full.png" style="border-radius: 10px; margin-top: 10px;" width="70px" height="70px" alt="logo_full.png"> </span>
+
     <span class="title">{{title}}</span>
 
     <app-login (succesConnexion)="changeHeader()" style="margin-left: 50%;"  *ngIf="!(change)" ></app-login>
@@ -7,8 +9,8 @@
     <div *ngIf="change" mat-card-avatar class="example-header-image" ></div>
 
     <div *ngIf="change">
-        <button mat-button  >{{currentUser.firstName}}</button>
-        <button mat-button  >Accueil</button>
+        <button mat-button (click)="monProfil()" class="mon_profil" >{{currentUser.firstName}}</button>
+        <button mat-button   >Accueil</button>
         <button mat-button  >Messagerie</button>
         <button mat-button  >Events</button>
     </div>

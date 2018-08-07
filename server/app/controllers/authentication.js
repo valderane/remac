@@ -35,6 +35,7 @@ function setUserInfo(request){
         subDomains: request.subDomains,
         pays: request.pays,
         ville: request.ville,
+        cp: request.cp,
         active: request.active
         // TODO ajouter des trucs
     };
@@ -75,9 +76,27 @@ exports.register = function(req, res, next){
     var status = req.body.status; // only the admin can choose the state of a user when sign up
     var firstName = req.body.firstName;
     var lastName = req.body.lastName;
+    var cp = req.body.cp;
+    var ville = req.body.ville;
+    var emails = req.body.emails;
+    var tels = req.body.tels;
+    var domains = req.body.domains;
+    var subDomains = req.body.subDomains;
      
     if(!email){
         return res.status(422).send({error: 'You must enter an email address'});
+    }
+
+    if(!tels){
+        return res.status(422).send({error: 'You must enter a phone number'});
+    }
+
+    if(!domains){
+        return res.status(422).send({error: 'You must enter a domain'});
+    }
+
+    if(!subDomains){
+        return res.status(422).send({error: 'You must enter a subDomain'});
     }
  
     if(!password){
@@ -111,7 +130,14 @@ exports.register = function(req, res, next){
             password: password,
             status: status,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            cp: cp,
+            ville: ville,
+            emails: emails,
+            tels: tels,
+            domains: domains,
+            subDomains: subDomains
+
         });
  
         user.save(function(err, user){

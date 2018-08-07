@@ -21,13 +21,31 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  adresse: String,
+  cp: {
+      type: String,
+      //required: true
+  },
+  ville: {
+      type: String
+  },
+  emails: [String],
+  tels: [String],
+  sites: [String],
+  entreprise: mongoose.Schema.Types.Mixed,
+  tarifs: mongoose.Schema.Types.Mixed,
+  formation: mongoose.Schema.Types.Mixed,
+  titre: String,
+  entrepriseTravail: String,
   status:{
     type: String,
     enum: ['membre', 'editeur', 'admin'],
     default: 'membre'
   },
   domains: [String],
-  subDomains: [String]
+  subDomains: [String],
+  domain: String,
+  subDomain: String
 }, {
   timestamps:true
 });

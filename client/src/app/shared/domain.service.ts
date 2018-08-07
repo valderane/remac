@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Domain } from "./domain";
 import {Observable, of} from "rxjs";
+import { Http } from '@angular/http';
+import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: "root",
@@ -8,43 +10,20 @@ import {Observable, of} from "rxjs";
 export class DomainService {
 
   domains: Domain[];
+  url:string;
 
-  constructor() {
-    this.domains = [
-      {
-        name: 'Informaticien',
-        subDomains: [
-          'programmeur',
-          'developpeur',
-          'chanteur',
-          'game designer',
-          'infographiste'
-        ]
-      },
-      {
-        name: 'Musicien',
-        subDomains: [
-          'programmeur',
-          'developpeur',
-          'chanteur',
-          'game designer',
-          'infographiste'
-        ]
-      },
-      {
-        name: 'Electricien',
-        subDomains: [
-          'programmeur',
-          'developpeur',
-          'chanteur',
-          'game designer',
-          'infographiste'
-        ]
-      }
-    ];
+  constructor(public http: Http, public urlService: UrlService ) {
+    this.url = urlService.getUrl();
   }
 
-  getDomains(): Observable<Domain[]> {
-    return of(this.domains);
+  getDomains() {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.url+'/domains').subscribe(res => {
+        resolve(res.json().data);
+      }, err => {
+        console.log("une erreur s'est produite lors de la récupération des domains");
+      })
+    })
+    
   }
 }

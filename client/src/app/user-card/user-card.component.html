@@ -1,21 +1,27 @@
 <mat-card  class="user">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>  {{user.firstName}}  {{user.lastName}} </mat-card-title>
+    <div mat-card-avatar class="avatar"></div>
+    <mat-card-title (click)="voirProfil(user._id)" > {{user.lastName}}  {{user.firstName}} </mat-card-title>
     <mat-card-subtitle>
-      <span *ngFor="let domain of user.domains" >
-        {{domain}}
-      </span>
-
+      <span>{{user.titre}}</span>
+      <br *ngIf="user.titre">
+      <span>{{user.subDomain}}</span>
+      <br>
+      <span *ngIf="user.entrepriseTravail"> Travaille Chez {{user.entrepriseTravail}}</span>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+    <p>
+      {{user.adresse}}
+    </p>
+    <p>
+      {{user.cp}}  {{user.ville}}
+    </p>
     <p>
       {{user.description}}
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button >Voir le profil</button>
-    <button mat-button >Contacter</button>
+    <button mat-button class="button" (click)="voirProfil(user._id)" >VOIR LE PROFIL</button>
   </mat-card-actions>
 </mat-card>

@@ -1,0 +1,210 @@
+<mat-card>
+
+    <mat-card-header>
+        <div mat-card-avatar class="avatar"></div>
+        <mat-card-title class="nom">{{user.lastName}} {{user.firstName}}</mat-card-title>
+        <mat-card-subtitle class="secteur">
+            <span *ngFor="let domain of user.domains" >
+              {{domain}}
+            </span>
+        </mat-card-subtitle>
+    </mat-card-header>
+  
+  </mat-card>
+
+  <div class="container" >
+  <div class="profil-container">
+  
+    <mat-card class="profil-content">
+        <mat-card-title>Description du professionnel
+             <img (click)="allowModDescription()" *ngIf="!peutModifierDescription" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+             <button *ngIf="peutModifierDescription" mat-button (click)="terminerModDescription()" style="background: rgb(105, 207, 233)" >terminer</button>
+        </mat-card-title>
+
+        <mat-divider></mat-divider>
+        <br/>
+        <mat-card-content>
+          <p *ngIf="!peutModifierDescription">{{user.description}}</p>
+          <br/>
+          <textarea *ngIf="peutModifierDescription" rows="3" style="width: 100%" [(ngModel)]="user.description" placeholder="modifier ma description" ></textarea>
+        </mat-card-content>
+    </mat-card>
+  
+    <!--
+    <mat-card class="profil-content">
+        <mat-card-title>Expertises</mat-card-title>
+        <mat-card-content>
+            <mat-chip-list *ngFor="let exp of user.expertises" >
+                <mat-chip>{{exp}}</mat-chip>
+            </mat-chip-list>
+        </mat-card-content>
+    </mat-card>
+    -->
+  
+    <mat-card class="profil-content">
+        <mat-card-title>Emails  
+                <img (click)="devoileAjoutEmailFunc()" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br/>
+        <mat-card-content>
+
+          <div *ngFor="let email of user.emails" >
+               {{email}} <img src="../../assets/icons/x.svg" (tap)="remove('email', email)" width="16px" height="16px" style="margin-left: 10px"  >
+          </div>
+
+          <div *ngIf="devoileAjoutEmail">
+              <input style="width: 40%" [(ngModel)]="email" type="email"  placeholder="ajouter un email" > <button mat-button (click)="addEmail()" >Ok</button> 
+          </div>
+  
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="profil-content">
+
+        <mat-card-title>Telephones 
+                <img (click)="devoileAjoutTelFunc()" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br/>
+
+        <mat-card-content>
+            <div *ngFor="let tel of user.tels" >
+                <p>{{tel}}  <button mat-button (tap)="remove('tel', tel)" >Effacer</button> </p>
+            </div>
+
+          <div *ngIf="devoileAjoutTel">
+            <input style="width: 40%"  [(ngModel)]="tel" type="number" placeholder="ajouter un telephone" > <button mat-button (click)="addTel()" >Ok</button>
+          </div>  
+        </mat-card-content>
+
+    </mat-card>
+
+
+    <mat-card class="profil-content">
+
+            <mat-card-title>Adresses
+            </mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div *ngIf="user.adresses">
+                    <div *ngFor="let adresse of user.adresses" >
+                        <p>{{adresse.adresse}}</p>
+                        <p>{{adresse.cp}}  {{adresse.ville}}</p>
+                    </div>
+                </div>
+
+                <div *ngIf="!user.adresses" >
+                    <p>Ajouter une adresse pour être visible dans les recherches...</p>
+                    <form (submit)="addAdress()" >
+                        <input style="width: 40%" name="adresse"  [(ngModel)]="adresse" type="text" placeholder="adresse" > 
+                        <br>
+                        <input style="width: 40%" name="adresse"  [(ngModel)]="cp" type="number" placeholder="code postal" >
+                        <br>
+                        <input style="width: 40%" name="adresse"  [(ngModel)]="ville" type="text" placeholder="ville" >
+                        <br>
+                        <button mat-button type="submit">Ok</button>
+                    </form>
+                </div>
+            </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="profil-content">
+        <mat-card-title>Parcours
+            <img (click)="devoileAjoutParcoursFunc()" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br/>
+
+        <mat-card-content>
+
+             <div *ngFor="let form of user.formation" >
+                <p style="display: inline;" > {{form.label}}  {{form.content}} <button mat-button (tap)="remove('formation', formation)" >Effacer</button> </p>
+                    
+            </div>
+
+            <div *ngIf="devoileAjoutParcours">
+                <input style="width: 40%"  [(ngModel)]="formation.label" type="number" placeholder="année ( ex: 2018 )" > 
+                <input style="width: 40%"  [(ngModel)]="formation.content" type="text" placeholder="description" >
+                <button mat-button (click)="addParcours()" >Ok</button>
+            </div>  
+
+        </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="profil-content">
+        <mat-card-title>Tarifs
+            <img (click)="devoileAjoutTarifFunc()" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br/>
+
+        <mat-card-content>
+
+             <div *ngFor="let tarif of user.tarifs" >
+                <p style="display: inline;" > {{tarif.label}}  {{tarif.prix}} <button mat-button (tap)="remove('tarif', tarif)" >retirer</button> </p>
+                    
+            </div>
+
+            <div *ngIf="devoileAjoutTarif">
+                <input style="width: 40%"  [(ngModel)]="tarif.label" type="text" placeholder="service" > 
+                <input style="width: 40%"  [(ngModel)]="tarif.prix" type="number" placeholder="prix (en € )" >
+                <button mat-button (click)="addTarif()" >Ok</button>
+            </div>  
+
+        </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="profil-content" style="margin-bottom: 20px;" >
+
+        <mat-card-title>Sites internet 
+                <img (click)="devoileAjoutSiteFunc()" style="margin-left: 3%;" width="15px" height="15px" src="../../assets/icons/edit.svg" alt="edit.png" >
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <br/>
+
+        <mat-card-content *ngIf="user.sites" >
+            <div *ngFor="let site of user.sites" >
+                <a  [href]="site" >{{site}}</a>
+            </div>
+
+          <div *ngIf="devoileAjoutSite">
+            <input style="width: 40%"  [(ngModel)]="site" type="text" placeholder="ajouter un site internet ..." > <button mat-button (click)="addSite()" >Ok</button>
+          </div>  
+        </mat-card-content>
+
+    </mat-card>
+
+  
+    <mat-card class="profil-content" *ngIf="user.entreprise">
+        <mat-card-title>Informations sur l'entreprise</mat-card-title>
+        <mat-card-content>
+  
+            <mat-list role="list">
+  
+                <mat-list-item role="listitem">Nom: {{user.entreprise.nom}}</mat-list-item>
+  
+                <mat-list-item role="listitem">Nombre d'employés: {{user.entreprise.employes}}</mat-list-item>
+  
+                <mat-list-item role="listitem">Adresse: {{user.entreprise.adresse}}, {{user.entreprise.cp}} {{user.entreprise.ville}}</mat-list-item>
+  
+                <mat-list-item role="listitem">Telephone: {{user.entreprise.tel}}</mat-list-item>
+  
+                <mat-list-item role="listitem">SIRET: {{user.entreprise.siret}}</mat-list-item>
+  
+            </mat-list>
+  
+        </mat-card-content>
+    </mat-card>
+
+
+  
+  </div>
+  </div>
+<!--
+  <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+  <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+-->

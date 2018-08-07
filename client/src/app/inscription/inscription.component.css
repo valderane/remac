@@ -1,27 +1,62 @@
-.form-div > form > mat-form-field {
-    width: 90%;
+.form-div > form > input {
+    width: 100%;
     color: #2e2827;
-    text-align: center;
+    margin-bottom:2px;
+    
 }
 
 .form-div{
-    background: #faf7f2;
-    border: 1px solid rgb(166, 255, 0);
-    border-radius: 5px;
     color: #2e2827;
-    width: 70%;
+    width: 90%;
 }
 
 button{
     text-align: center; 
-    width: 90%;
-    background: #147a21;
-    color: #fcf8f7;
+    width: 105%;
+    background: #FDAF00;
+    color: #ffffff;
     font-size: 110%;
+    border-radius: 5px;
 }
 
-.form-div > form > * {
-    margin-left: 5%;
-    margin-right: 5%;
+.inline {
+    width: 106%;
 }
+
+.inline > * {
+    display: inline-flex;
+    width: 44%;
+    height: 35px;
+    border-style: none;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.l {
+    margin-left: 5%;
+}
+
+.reste > * {
+    margin-bottom: 12px;
+    height: 28px;
+    width: 101%;
+    border-style: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.reste > select {
+    width: 105%;
+    height: 38px;
+}
+
+
+.titre {
+    color: #fcf8f7;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    font-weight: 100;
+}
+
+
 

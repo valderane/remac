@@ -2,7 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { HeaderService } from '../shared/header.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+
+
 
 @Component({
   selector: 'app-login',
@@ -27,14 +28,19 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.userService.login(this.credentials).then((res:any)=>{
-      this.succesConnexion.emit();
+      this.succesConnexion.emit()
       this.headerService.setCurrentUser(res.user);
+      localStorage.setItem('token', res.token);
       this.router.navigate(['/main']); //si on est connecté, on va au main
     }, (err) => {
       // si on ne peut pas se connecter , pervenir le client pourquoi
       console.log(err);
     });
   }
+
+
+
+  
 
 
 }

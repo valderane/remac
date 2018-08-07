@@ -18,10 +18,13 @@ export class HeaderComponent implements OnInit {
   change:boolean = false;
   userUpdated:boolean = false;
   //change2: boolean =  false;
-  currentUser: User = new User();
+  currentUser: User;
+
+  decodedToken: any;
 
   constructor(public userService: UserService, public router: Router, 
               public headerService: HeaderService) {
+
   }
 
   ngOnInit() {
@@ -33,6 +36,7 @@ export class HeaderComponent implements OnInit {
 
     this.headerService.currentUser$.subscribe((user)=>{ // une fois connecté, récuperer les données de l'utilisateur
       this.currentUser = user;
+      this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
       this.userUpdated = true;
     });
 
@@ -40,6 +44,7 @@ export class HeaderComponent implements OnInit {
     if(!this.userUpdated){
       const helper = new JwtHelperService();
       this.currentUser = helper.decodeToken(localStorage.getItem('token'));
+      this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
     }
     
   }
@@ -62,6 +67,10 @@ export class HeaderComponent implements OnInit {
     }, (err) => {
       //prevenir le client en cas d'erreur
     });
+  }
+
+  monProfil() {
+    this.router.navigate(['mon_profil']);
   }
 
 }

@@ -1,0 +1,12 @@
+User.aggregate([{ $match:{ $or: [ 
+        {domains: {$in: domains}},
+        {subDomains: {$in: subDomains}},
+        {ville : {$eq: ville}}  
+     ]
+    }},
+    {$group: {
+        matches:{$sum:1}
+    }}
+    ,{ 
+        $sort: {$matches: -1}
+    }])

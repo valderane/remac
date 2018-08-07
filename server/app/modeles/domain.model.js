@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 
 const DomainSchema = mongoose.Schema({
-  Name: String,
-  subDomais: [String]
+  name: String,
+  subDomains: [String]
 }, {
   timestamps:true
 });

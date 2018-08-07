@@ -1,3 +1,78 @@
-<p>
-  profil works!
-</p>
+<mat-card>
+
+  <mat-card-header>
+      <div mat-card-avatar class="avatar"></div>
+      <mat-card-title class="nom"> {{user.firstName}}  {{user.lastName}} </mat-card-title>
+      <mat-card-subtitle class="secteur">
+          <span *ngFor="let domain of user.domains" >
+            {{domain}}
+          </span>
+      </mat-card-subtitle>
+  </mat-card-header>
+
+</mat-card>
+
+<div class="profil-container">
+
+  <mat-card class="profil-content">
+      <mat-card-title>Description du professionnel</mat-card-title>
+      <mat-card-content>{{user.description}}</mat-card-content>
+  </mat-card>
+
+  <!--
+  <mat-card class="profil-content">
+      <mat-card-title>Expertises</mat-card-title>
+      <mat-card-content>
+          <mat-chip-list *ngFor="let exp of user.expertises" >
+              <mat-chip>{{exp}}</mat-chip>
+          </mat-chip-list>
+      </mat-card-content>
+  </mat-card>
+  -->
+
+  <mat-card class="profil-content">
+      <mat-card-title>Contacts et adresses</mat-card-title>
+      <br/>
+      <mat-card-content>
+        <h2>Contacts</h2>
+        <h3>Emails professionnels: </h3>
+        <p *ngFor="let email of user.emails">{{email}}</p>
+
+        <h3>Telephones professionnels: </h3>
+        <p *ngFor="let tel of user.tels">{{tel}}</p>
+
+        <br/>
+
+        <h2>Adresse professionnelle</h2>
+        <p>{{user.adresse}}</p>
+        <p>{{user.cp}}  {{user.ville}}</p>
+
+        <br/>
+
+        <h2>Site internet</h2>
+        <p *ngIf="user.site" ><a  [href]="user.site" >accéder au site</a></p>
+      </mat-card-content>
+  </mat-card>
+
+  <mat-card class="profil-content" *ngIf="user.entreprise">
+      <mat-card-title>Informations sur l'entreprise</mat-card-title>
+      <mat-card-content>
+
+          <mat-list role="list">
+
+              <mat-list-item role="listitem">Nom: {{user.entreprise.nom}}</mat-list-item>
+
+              <mat-list-item role="listitem">Nombre d'employés: {{user.entreprise.employes}}</mat-list-item>
+
+              <mat-list-item role="listitem">Adresse: {{user.entreprise.adresse}}, {{user.entreprise.cp}} {{user.entreprise.ville}}</mat-list-item>
+
+              <mat-list-item role="listitem">Telephone: {{user.entreprise.tel}}</mat-list-item>
+
+              <mat-list-item role="listitem">SIRET: {{user.entreprise.siret}}</mat-list-item>
+
+          </mat-list>
+
+      </mat-card-content>
+  </mat-card>
+
+</div>

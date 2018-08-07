@@ -2,7 +2,7 @@
 
 <form>
 
-    <input id="seachInput" placeholder="entrer un secteur d'activité..."  type="text" [formControl]="domains" [matAutocomplete]="auto">
+    <input class="seachInput1" placeholder="Secteur d'activité..."  type="text" [formControl]="domains" [matAutocomplete]="auto">
 
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
@@ -10,7 +10,23 @@
         </mat-option>
     </mat-autocomplete>
 
-    <button mat-button (click)="seach()">rechercher</button>
+    <input class="seachInput3" placeholder="Profession..."  type="text" [formControl]="subDomains" [matAutocomplete]="auto3">
+
+    <mat-autocomplete #auto3="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptionsSub | async" [value]="option">
+          {{ option }}
+        </mat-option>
+    </mat-autocomplete>
+
+    <input class="seachInput2" placeholder="Paris, Lille, Bordeaux ..."  type="text" [formControl]="ville" [matAutocomplete]="auto2">
+
+    <mat-autocomplete #auto2="matAutocomplete">
+        <mat-option *ngFor="let vil of filteredOptionsVille | async" [value]="vil">
+          {{ vil }}
+        </mat-option>
+    </mat-autocomplete>
+
+    <button mat-button id="seachButton" (click)="seach()">RECHERCHER ></button>
 
 
     

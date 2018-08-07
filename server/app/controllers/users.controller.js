@@ -1,4 +1,5 @@
 const User = require('../modeles/user.model.js') ;
+const Domain = require('../controllers/domains.controller');
 var jwt = require('jsonwebtoken'); 
 
 exports.create = (req, res) => {
@@ -7,8 +8,12 @@ exports.create = (req, res) => {
     firstName : req.body.firstName,
     lastName : req.body.lastName,
     description: req.body.description,
-    domains: req.body.domains,
-    subDomains: req.body.subDomains
+    domains: req.body.domains || [req.body.domain],
+    subDomains: req.body.subDomains || [req.body.subDomain],
+    cp: req.body.cp,
+    ville:  req.body.ville,
+    emails:  req.body.emails || [req.body.email],
+    tels:  req.body.tels || [req.body.tel]
   });
 
   //save the user
@@ -19,6 +24,54 @@ exports.create = (req, res) => {
       message: "error while saving the new user"
     });
   });
+
+}
+
+function createMult(users) {
+    var utilisateurs = [];
+    users.forEach(usr => {
+            
+        (function(user){
+            const utilisateur = {
+                firstName : user.firstName,
+                lastName : user.lastName,
+                description: user.description,
+                domains: user.domains || [user.domain],
+                domain: user.domain,
+                subDomains: user.subDomains || [user.subDomain],
+                subDomain: user.subDomain,
+                titre: user.titre,
+                entrepriseTravail: user.entrepriseTravail,
+                adresse: user.adresse,
+                cp: user.cp,
+                ville:  user.ville,
+                emails:  user.emails || [user.email],
+                tels:  user.tels || [user.tel],
+                password: user.password,
+                email: user.email || "me@gmail.com"
+            };
+    
+            utilisateurs.push(utilisateur);
+        })(usr)
+    })
+
+    return utilisateurs;
+}
+
+exports.populate = (req, res) => {
+    var users = req.body;
+
+    var utilisateurs = createMult(users);
+
+    User.insertMany(utilisateurs, (err, docs) => {
+        if(err){
+            throw err
+        }
+
+        Domain.addDomainsByUsers(docs);
+
+        res.json({message:"succefully saved"})
+    })
 
 }
 
@@ -54,6 +107,16 @@ exports.findByDomainSubdomain = (req, res) => {
     }); */
 };
 
+exports.findUserById = (req, res) => {
+    var id = req.params.id;
+
+    User.findById(id).then(user => {
+        res.json(user)
+    }, err => {
+        console.log(err)
+    })
+}
+
 //update a user with a specific id
 exports.update = (req, res) => {
 
@@ -62,7 +125,10 @@ exports.update = (req, res) => {
         lastName : req.body.lastName,
         description: req.body.description,
         domains: req.body.domains,
-        subDomains: req.body.subDomains
+        subDomains: req.body.subDomains,
+        emails: req.body.emails,
+        tels: req.body.tels,
+        entreprise: req.body.entreprise
     }, {new: true})
     .then(user => {
         if(!user) {
@@ -107,14 +173,13 @@ exports.delete = (req, res) => {
 
 exports.deleteAll = (req, res) => {
     User.remove({}).then(users => {
-        res.json({
-            message: "every users removed"
+        res.json({message: "every users removed"})
         }, error => {
             res.send({
                 error: "impossible de tout supprimer"
             })
         })
-    })
+
 }
 
 /**
@@ -154,21 +219,38 @@ exports.countUsersByDomain = (req, res) => {
 exports.getUsersByDomainSubdomain = (req, res) => {
     var domains = req.query.domains;
     var subDomains = req.query.subDomains;  
+    var ville = req.query.ville;
     var index = req.query.index;
     var pageLength = req.query.pageLength;
+
+    if(ville == ""){
+        var req = {$or: [ 
+            {domains: {$in: domains}},
+            {subDomains: {$in: subDomains}},
+         ]}
+    }
+    else {
+        var req = {$and: [{$or: [ 
+            {domains: {$in: domains}},
+            {subDomains: {$in: subDomains}},
+         ]},
+         {ville : {$eq: ville}}
+        ]}
+    }
+
     
-    User.find({$or: [ {domains: {$in: domains}},
-        {subDomains: {$in: subDomains}}  
-     ]})
-    // .skip(pageLength * index)
-    // .limit(pageLength * 1)
-    .exec((err, users) => {
+    User.find(req, (err, users) => {
 
         if(err) throw err;
 
         res.json(users);
 
-    });
+    }
+    )
+    // .skip(pageLength * index)
+    // .limit(pageLength * 1)
+    .exec();
+
 
 }
 

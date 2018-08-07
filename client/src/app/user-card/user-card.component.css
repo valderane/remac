@@ -1,18 +1,67 @@
 .user {
   max-width: 100%;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding-bottom: 20px;
+  padding-top: 7px;
+  padding-right: 10px;
 }
 
-.example-header-image {
+.avatar {
   background-image: url('https://st.depositphotos.com/1779253/5140/v/950/depositphotos_51404241-stock-illustration-female-profile-avatar-icon-white.jpg');
   background-size: cover;
+  width: 50px;
+  height: 50px;
 }
 
-mat-card-title {
-  font-weight: bolder;;
+.mat-card-title {
+  font-size: 13px;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0596de;
 }
 
-button {
-  background: #DDDDDD;
+.mat-card-subtitle {
+  font-family: "Roboto", Arial, sans-serif;
+  color: #435f71;
+  font-size: 11px;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.mat-card-content {
+  padding-left: 58px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.user.mat-card {
+  -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+  box-shadow: none;
+  background: white;
+  transition: border 400ms ease-out, box-shadow 400ms ease-out;
+}
+
+.user:hover {
+  border: 1px solid#077AC7;
+  box-shadow: 0 2px 14px rgba(51, 51, 51, 0.2);
+}
+
+
+.button {
+  color: rgb(252, 252, 252);
+  font-size: 9px;
+  width: 20%;
+  text-align: center;
+  background:  #077AC7;
+}
+
+.button:hover {
+  border: 1px solid  rgb(60, 150, 209);
+}
+
+.mat-card-actions {
+  padding-left: 10px;
 }

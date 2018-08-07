@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // material design
 import {
-  MatToolbarModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule,
-  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatSnackBarModule
+  MatToolbarModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSnackBarModule, MatChipsModule,
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatListModule, MatDividerModule, MatRadioModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { ProfilComponent } from './profil/profil.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { MonProfilComponent } from './mon-profil/mon-profil.component';
+import { RouterModule, Routes } from '@angular/router';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { ConversationComponent } from './conversation/conversation.component';
     UserCardComponent,
     ProfilComponent,
     ConversationComponent,
+    MonProfilComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -51,14 +54,20 @@ import { ConversationComponent } from './conversation/conversation.component';
     MatToolbarModule,
     MatFormFieldModule,
     MatIconModule,
+    MatChipsModule,
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
     MatCardModule,
+    MatDividerModule,
+    MatRadioModule,
     MatPaginatorModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatListModule,
+    MatGridListModule,
     MatSnackBarModule,
     MatAutocompleteModule,
     AppRoutingModule

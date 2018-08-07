@@ -1,0 +1,113 @@
+.avatar {
+    background-image: url('https://st.depositphotos.com/1779253/5140/v/950/depositphotos_51404241-stock-illustration-female-profile-avatar-icon-white.jpg');
+    background-size: cover;
+    width: 140px;
+    height: 140px;
+    margin-left: 50px;
+  }
+
+.nom {
+  margin-left: 20px;
+  margin-top: 10px;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 70;
+  line-height: 35px;
+  font-size: 26px;
+}
+
+.profil-content {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.profil-content.mat-card {
+  -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+  box-shadow: none;
+  background: white;
+}
+
+.secteur {
+  font-size: 16px;
+  font-weight: 300;
+  margin-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+
+  
+}
+
+.profil-container {
+  width: 55%;
+  margin-left: 3%
+}
+
+.container {
+  background: #EEF2F6;
+}
+
+.profil-content > .mat-card-title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  margin: 0 0 14px;
+  font-family: "Montserrat", Arial, sans-serif;
+  color:#435f71
+}
+
+.profil-content.mat-card {
+  -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+  box-shadow: none;
+  background: white;
+  transition: border 400ms ease-out, box-shadow 400ms ease-out;
+}
+
+.profil-content:hover {
+  border: 1px solid#077AC7;
+  box-shadow: 0 2px 14px rgba(51, 51, 51, 0.2);
+}
+
+.profil-content > .mat-card-content {
+  font-weight: 200;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  color:#435f71;
+  line-height: 24px;
+  margin: 0 0 14px;
+  padding-left: 10px;
+}
+
+
+input {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  border: 1px solid #00AFFF;
+  min-width: 26px;
+  margin-left: 15px;
+}
+
+button:hover {
+  border: 2px solid  rgb(16, 129, 185);
+  background:  rgb(255, 255, 255)
+}
+
+img:hover {
+  border: 1px solid#077AC7;
+  box-shadow: 0 2px 14px rgba(51, 51, 51, 0.2);
+}
+
+removeItem {
+  width: 16px; height: 16px; 
+  background-repeat: no-repeat; 
+}
+
+

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const SubDomainSchema = mongoose.Schema({
-  Name: String
+  name: String
 }, {
   timestamps:true
 });

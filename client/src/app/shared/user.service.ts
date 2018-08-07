@@ -7,6 +7,7 @@ import { Headers, Http} from '@angular/http';
 import { promise } from 'protractor';
 import { resolve } from 'path';
 import {  MatSnackBar } from '@angular/material';
+import * as jwt_decode from "jwt-decode";
 
 
 @Injectable({
@@ -136,6 +137,31 @@ export class UserService {
 
   }
 
+
+  /**
+   * 
+   */
+  getUser(id) {
+
+    return new Promise((resolve, reject) => {
+      this.token = localStorage.getItem('token');
+      let headers = new Headers();
+  
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', 'Bearer '+this.token );
+  
+      return this.hp.get(this.dburl + "userById/"+id, {headers: headers})
+                    .subscribe((data: any) => {
+                      data = data.json();
+                      resolve(data);
+                    }, (err) => {
+                      reject(err);
+                    })
+      
+    });
+
+  }
+
   /**
    * 
    */
@@ -206,6 +232,17 @@ export class UserService {
   }
 
 
+  updateUser(id, userDetails) {
+    return new Promise((resolve, reject) => {
+      this.hp.put(this.dburl + 'user/'+id, userDetails).subscribe( res=> {
+        resolve(res);
+      }, err => {
+        reject(err);
+      })
+    })
+  }
+
+
 
   /*
   -to log out 
@@ -223,5 +260,21 @@ export class UserService {
       return of(result as T);
     }
   }
+
+
+
+
+  getDecodedAccessToken(token: string): any {
+    try{
+        return jwt_decode(token);
+    }
+    catch(Error){
+        return null;
+    }
+  }
+
+  formaterNom(nom: string): string {
+    return nom[0].toUpperCase() + nom.slice(1).toLowerCase();
+  } 
 
 }

@@ -6,15 +6,19 @@ var conversation = require('./controllers/conversation');
 
 module.exports = (app) => {
   const users = require('./controllers/users.controller.js');
-  //const domains = require('./controllers/domains.controller.js');
+  const domains = require('./controllers/domains.controller.js');
   //const subDomais = require('./controllers/subDomais.controller.js');
 
 
   app.post('/user', users.create);  //create a new user (debug)
+
+  app.post('/users', users.populate); //sauvegarde plusieurs users (debug)
   
   app.get('/user', users.findAll); //get all users TODO : get users by domains and subdomains
 
   app.get('/user/:domain', users.findByDomainSubdomain); // ...
+
+  app.get('/userById/:id', users.findUserById);
 
   app.get('/userNbr', users.countUsers); // get nbr of all users
 
@@ -29,6 +33,15 @@ module.exports = (app) => {
   app.delete('/user/:id', users.delete); //delete a specific
 
   app.delete('/users', users.deleteAll);
+
+
+
+  app.get('/domains', domains.getDomains);
+  app.delete('/domains', domains.deleteAll);
+
+
+
+  app.post('/domain')
 
 
 
