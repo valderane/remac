@@ -37,7 +37,6 @@ export class MonProfilComponent implements OnInit {
     let decodedToken = this.userService.getDecodedAccessToken(token);
     let userId = decodedToken._id;
     this.userService.getUser(userId).then((user:any)=>{
-      console.log(user);
       this.user = user;
       this.cp = user.cp * 1;
       this.ville = user.ville;

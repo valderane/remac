@@ -1,8 +1,14 @@
+.banniere {
+  padding: 5px;
+}
+
+
+
 .avatar {
     background-image: url('https://st.depositphotos.com/1779253/5140/v/950/depositphotos_51404241-stock-illustration-female-profile-avatar-icon-white.jpg');
     background-size: cover;
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
     margin-left: 50px;
   }
 

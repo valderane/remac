@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   change:boolean = false;
   userUpdated:boolean = false;
   //change2: boolean =  false;
-  currentUser: User;
+  currentUser: any = {};
 
   decodedToken: any;
 
@@ -58,6 +58,14 @@ export class HeaderComponent implements OnInit {
     this.userService.logout();
     this.router.navigate(['/index']);
     // aller à l'index
+  }
+
+  toAcceuil() {
+    this.router.navigate(['/main']);
+  }
+
+  toMessagerie() {
+    this.router.navigate(['/messagerie']);
   }
 
   changeHeaderIfAuth(){

@@ -1,0 +1,29 @@
+<div class="container">
+
+  <p>
+    Contactez nous pour qu'on puisse ajouter votre secteur d'activité et/ou votre profession. Vous serez recontacté dans les plus brefs délais 
+    par email ou par téléphone puis vous pourrez vous inscrire sans problème.
+  </p>
+
+  <form  (submit)="submit()"  [formGroup]="formHandler">
+    <input type="text" formControlName="nom" placeholder="Nom (requis)" >
+    <br>
+    <input type="text" formControlName="email" placeholder="Email (requis)" >
+    <br>
+    <input type="tel" formControlName="tel" placeholder="Téléphone (facultatif)" >
+    <br>
+    <input type="text" formControlName="domain" placeholder="Secteur d'activité..." >
+    <br>
+    <input type="text" formControlName="subDomain" placeholder="Profession..." >
+    <br>
+    <input type="text" formControlName="autres" placeholder="Autres suggessions..." >
+    <br><br>
+    <button mat-button type="submit" >Envoyer</button>
+
+    <br><br><br>
+
+  </form>
+
+  <app-footer></app-footer>
+
+</div>

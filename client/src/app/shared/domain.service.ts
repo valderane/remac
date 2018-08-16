@@ -26,4 +26,15 @@ export class DomainService {
     })
     
   }
+
+  getSubDomains() {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.url+'/subDomains').subscribe(res => {
+        resolve(res.json().data);
+      }, err => {
+        console.log("une erreur s'est produite lors de la récupération des professions");
+      })
+    })
+    
+  }
 }

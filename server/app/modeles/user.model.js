@@ -29,9 +29,12 @@ const UserSchema = mongoose.Schema({
   ville: {
       type: String
   },
+  likes: [ mongoose.Schema.Types.ObjectId ],
+  dislikes: [ mongoose.Schema.Types.ObjectId ],
   emails: [String],
   tels: [String],
   sites: [String],
+  adresses: [ mongoose.Schema.Types.Mixed],
   entreprise: mongoose.Schema.Types.Mixed,
   tarifs: mongoose.Schema.Types.Mixed,
   formation: mongoose.Schema.Types.Mixed,

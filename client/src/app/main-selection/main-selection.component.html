@@ -13,8 +13,8 @@
     <input class="seachInput3" placeholder="Profession..."  type="text" [formControl]="subDomains" [matAutocomplete]="auto3">
 
     <mat-autocomplete #auto3="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptionsSub | async" [value]="option">
-          {{ option }}
+        <mat-option *ngFor="let option of filteredOptionsSub | async" [value]="option.name">
+          {{ option.name }}
         </mat-option>
     </mat-autocomplete>
 

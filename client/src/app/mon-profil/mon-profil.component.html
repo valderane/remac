@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="banniere">
 
     <mat-card-header>
         <div mat-card-avatar class="avatar"></div>
@@ -74,7 +74,7 @@
             </div>
 
           <div *ngIf="devoileAjoutTel">
-            <input style="width: 40%"  [(ngModel)]="tel" type="number" placeholder="ajouter un telephone" > <button mat-button (click)="addTel()" >Ok</button>
+            <input style="width: 40%"  [(ngModel)]="tel" type="tel" placeholder="Ajouter un telephone" > <button mat-button (click)="addTel()" >Ok</button>
           </div>  
         </mat-card-content>
 

@@ -1,0 +1,45 @@
+ <div class="wrapper" > 
+  <div class="container" >  
+
+    <div class="convs-container" >
+      <mat-card>
+        <mat-card-header> <h3>Messagerie</h3></mat-card-header>
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+          <app-conv-card *ngFor="let conv of convs" [conv]="conv" [expId]="getExpId(conv)" (click)="chargeConv(conv)" ></app-conv-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="conv-container" >
+      <mat-card>
+        <mat-card-header><h3>{{interlocuteur}}</h3></mat-card-header>
+        <mat-divider></mat-divider>
+        
+        <mat-card-content>
+            <div id="list-of-messages">
+                <app-message-card *ngFor="let message of conv.messages" [message]="message" ></app-message-card>
+            </div>
+          <textarea placeholder="entrer votre message" [(ngModel)]="message" name="mess" ></textarea>
+          <button mat-button class="sendButton" (click)="sendMessage()">Envoyer</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    
+
+  </div>
+
+  <div style="position: absolute; top:85%; width: 100%;">
+      <app-footer></app-footer>
+  </div>
+
+</div>
+
+ 
+  
+
+
+
+

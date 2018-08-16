@@ -26,6 +26,17 @@ import { ProfilComponent } from './profil/profil.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { MonProfilComponent } from './mon-profil/mon-profil.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AjoutDomainComponent } from './ajout-domain/ajout-domain.component';
+import { ConvCardComponent } from './conv-card/conv-card.component';
+import { MessageCardComponent } from './message-card/message-card.component';
+import { MessagerieComponent } from './messagerie/messagerie.component';
+import { FooterComponent } from './footer/footer.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { InformationsComponent } from './informations/informations.component';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 
 @NgModule({
@@ -44,6 +55,12 @@ import { RouterModule, Routes } from '@angular/router';
     ProfilComponent,
     ConversationComponent,
     MonProfilComponent,
+    AjoutDomainComponent,
+    ConvCardComponent,
+    MessageCardComponent,
+    MessagerieComponent,
+    FooterComponent,
+    InformationsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -70,7 +87,14 @@ import { RouterModule, Routes } from '@angular/router';
     MatGridListModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3001'],
+        blacklistedRoutes: ['localhost:3001/auth/']
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

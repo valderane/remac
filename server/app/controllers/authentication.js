@@ -1,9 +1,9 @@
 var jwt = require('jsonwebtoken'); 
 var User = require('../modeles/user.model');
 var authConfig = require('../../config/auth');
-var random = require('../random');
 var nodemailer = require('nodemailer');
-var xoauth2 = require('xoauth2');
+var VilleCtrl = require('../controllers/villes.controller');
+var mailConfig = require('../../config/mail');
 
 //=============================================================
 //           fonctions auxiliaires
@@ -49,8 +49,8 @@ var smtpTransport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     auth: {
         type: "login",
-        user: "camer.remac@gmail.com",
-        pass: "remacremac"
+        user: mailConfig.user,
+        pass: mailConfig.pass
     }
 });
 
@@ -148,6 +148,8 @@ exports.register = function(req, res, next){
             
             //if everything is fine, send token to the user 
             var userInfo = setUserInfo(user);
+
+            VilleCtrl.addVille(user.ville);
 
             //demander confirmation de l'email
             var link = "http://localhost:5000/verify_email?token="+generateEmailToken(user._id),

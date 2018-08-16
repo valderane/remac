@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomainService } from '../shared/domain.service';
 import { VillesService } from '../shared/villes.service';
 import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-inscription',
@@ -37,6 +39,10 @@ export class InscriptionComponent implements OnInit {
   private wrong_password = false;
 
 
+  private filteredOptions: Observable<Domain[]>;
+  private filteredOptionsSub: Observable<Domain[]>;
+
+
   
 
   constructor(public userService: UserService, 
@@ -49,11 +55,20 @@ export class InscriptionComponent implements OnInit {
 
   ngOnInit() {
 
+    //============== recup des domains et sous domains ===============
+
     this.domainService.getDomains().then((res: any[]) => {
       this.domainsList = res;
     }, err => {
 
     })
+
+    this.domainService.getSubDomains().then((res: any[]) => {
+      this.subDomainsList = res;
+    }, err => {
+
+    })
+
 
     // initialisation du formGroup
     this.registerForm = this.formBuilder.group({
@@ -67,6 +82,20 @@ export class InscriptionComponent implements OnInit {
       domain: ['', Validators.required],
       subDomain: ['', Validators.required]
     });
+
+    //========== initialisation de l'autocomp ========================
+
+    this.filteredOptions = this.registerForm.controls.domain.valueChanges // appelée pour filter les resultats lors de l'autocompletion
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.domainsList))
+      );
+
+    this.filteredOptionsSub = this.registerForm.controls.subDomain.valueChanges // appelée pour filter les resultats lors de l'autocompletion
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value, this.subDomainsList))
+      );
 
   }
 
@@ -87,18 +116,6 @@ export class InscriptionComponent implements OnInit {
     }
     
     else{
-      //register the customer
-      /*
-      this.userService.createAccount(this.user).then((result) => {
-        //this.headerService.updateChange(true);
-        //this.router.navigate(['/main']);
-
-        console.log(result);
-      }, (err) => {
-        console.log(err);
-      });
-      */
-     console.log(this.registerForm.valid)
      if(this.registerForm.valid){
        this.user = this.registerForm.value; 
        var codePostale = this.user.cp;
@@ -109,7 +126,6 @@ export class InscriptionComponent implements OnInit {
             this.user.tels = [this.user.tel];
             this.user.domains = [this.user.domain];
             this.user.subDomains = [this.user.subDomain];
-            console.log(this.user);
             // TODO enregister l'utilisateur
             this.userService.createAccount(this.user).then((result) => {
               //this.headerService.updateChange(true);
@@ -134,14 +150,15 @@ export class InscriptionComponent implements OnInit {
     
   }
 
-  updateSubDomainsList(event): void { // modify de subDomains list when domains are modified
-    this.subDomainsList = [];
-    this.domainsList.forEach(domain => {
-      if(domain.name == event) {
-        this.subDomainsList = domain.subDomains;
-      }
-    });
-
+  private _filter(value: string, tab: any[]): Domain[] { // filtre les options d'autocompletion
+    const filterValue = this.noAccent( value.toLowerCase() );
+    return tab.filter(option => this.noAccent(option.name.toLowerCase()).includes(filterValue));
   }
 
+
+  private noAccent(str) {
+    var newStr = str;
+    return newStr.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  }
+  
 }

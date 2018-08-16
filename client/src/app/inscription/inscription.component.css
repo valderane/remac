@@ -45,17 +45,15 @@ button{
     padding: 5px;
 }
 
-.reste > select {
-    width: 105%;
-    height: 38px;
-}
-
-
 .titre {
     color: #fcf8f7;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 26px;
     font-weight: 100;
+}
+
+.reste > .mat-autocomplete {
+    padding: 0%;
 }
 
 

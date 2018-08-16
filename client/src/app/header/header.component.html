@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="tool-bar-style">
 
-    <span > <img src="../../assets/logo/logo_full.png" style="border-radius: 10px; margin-top: 10px;" width="70px" height="70px" alt="logo_full.png"> </span>
+    <span> <a style="cursor:pointer"  (click)="toAcceuil()" ><img src="../../assets/logo/logo_full.png" style="border-radius: 10px; margin-top: 10px;" width="70px" height="70px" alt="logo_full.png"></a> </span>
 
     <span class="title">{{title}}</span>
 
@@ -10,8 +10,8 @@
 
     <div *ngIf="change">
         <button mat-button (click)="monProfil()" class="mon_profil" >{{currentUser.firstName}}</button>
-        <button mat-button   >Accueil</button>
-        <button mat-button  >Messagerie</button>
+        <button mat-button (click)="toAcceuil()"   >Accueil</button>
+        <button mat-button (click)="toMessagerie()"  >Messagerie</button>
         <button mat-button  >Events</button>
     </div>
 

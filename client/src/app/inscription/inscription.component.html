@@ -18,7 +18,7 @@
 
         <input  type="number"  placeholder="Code postal *" formControlName="cp"  required>
 
-        <input  type="number" class="l"  placeholder="Téléphone *" formControlName="tel" required >
+        <input  type="tel" class="l"  placeholder="Téléphone *" formControlName="tel" required >
       
       </div>
      
@@ -30,17 +30,23 @@
 
       <br>
 
-        <select  formControlName="domain" name="domain" required (ngModelChange)="updateSubDomainsList($event)" >
-          <option [ngValue]="undefined" disabled  selected> Secteur d'activité ... </option>
-          <option *ngFor="let domain of domainsList" [ngValue]="domain.name" >{{domain.name}}</option>
-        </select>
+        <input placeholder="Secteur d'activité..."  type="text" formControlName="domain" [matAutocomplete]="auto">
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+              {{ option.name }}
+            </mat-option>
+        </mat-autocomplete>
       
       <br>
 
-        <select  formControlName="subDomain" required>
-          <option [ngValue]="undefined" disabled  selected> Profession ... </option>
-          <option *ngFor="let domain of subDomainsList" [ngValue]="domain" >{{domain}}</option>
-        </select>
+        <input placeholder="Profession..."  type="text" formControlName="subDomain" [matAutocomplete]="auto2">
+
+        <mat-autocomplete #auto2="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionsSub | async" [value]="option.name">
+              {{ option.name }}
+            </mat-option>
+        </mat-autocomplete>
 
       <br>
 
@@ -48,50 +54,17 @@
 
       <br>
       
-        <input  type="password" placeholder="Confirmer le mot de passe" formControlName="cmdp" (input)="compareMdp()" required>
+        <input style="margin-bottom: 0%;"  type="password" placeholder="Confirmer le mot de passe" formControlName="cmdp" (input)="compareMdp()" required>
 
-      <br>
-
-      <!--  Pas necessaire à l'inscription
-
-      <mat-form-field>
-        <textarea matInput rows="5" maxlength="150"  placeholder="description..."></textarea>
-      </mat-form-field>
-
-      <br>
-
-      <mat-form-field>
-          <mat-select placeholder="selectionner un domaine professionnel" [formControl]="domains" (ngModelChange)="changeSubDomainsList();" multiple>
-            <mat-select-trigger>
-              {{domains.value ? domains.value[0] : ''}}
-              <span *ngIf="domains.value?.length > 1" >
-                (+{{domains.value.length - 1}} others)
-              </span>
-            </mat-select-trigger>
-            <mat-option *ngFor="let domain of domainsList" [value]="domain.name" >{{domain.name}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-
-      <mat-form-field *ngIf="domains.value" >
-          <mat-select placeholder="sous domains pour plus de précision" [formControl]="subDomains" multiple>
-            <mat-select-trigger>
-              {{subDomains.value ? subDomains.value[0] : ''}}
-              <span *ngIf="subDomains.value?.length > 1" >
-                (+{{subDomains.value.length - 1}} others)
-              </span>
-            </mat-select-trigger>
-          
-            <mat-option *ngFor="let subdomain of subDomainsList" [value]="subdomain" >{{subdomain}}</mat-option>
-          </mat-select>
-      </mat-form-field>
-      -->
-
-      <br>
+      <br><br>
     </div>
    
       <button mat-button type="submit" >S'inscrire</button>
+
+      <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #2e2827 " > <a  routerLink="/ajoutDomain"> Je ne trouve pas ma profession et/ou mon secteur d'activité</a> </p>
+
       
-      <br><br><br><br>
+      <br><br><br>
       
     </form>
   </div>

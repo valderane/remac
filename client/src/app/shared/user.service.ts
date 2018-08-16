@@ -8,6 +8,7 @@ import { promise } from 'protractor';
 import { resolve } from 'path';
 import {  MatSnackBar } from '@angular/material';
 import * as jwt_decode from "jwt-decode";
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class UserService {
   token: any;
   inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
 
-  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar, public jwtHelper: JwtHelperService) {
     
   }
 
@@ -50,6 +51,17 @@ export class UserService {
  
     });
  
+  }
+
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    // Check whether the token is expired and return
+    // true or false
+    if(!token) {
+      return false;
+    }
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
 
@@ -241,6 +253,73 @@ export class UserService {
       })
     })
   }
+
+
+  /*
+  like
+  */
+  like(details) {
+
+    return new Promise((resolve, reject) => {
+      this.hp.put(this.dburl + 'like',details).subscribe( res=> {
+        resolve(res.json());
+      }, err => {
+        reject(err);
+      })
+    }) 
+
+  }
+
+  dislike(details) {
+
+    return new Promise((resolve, reject) => {
+      this.hp.put(this.dburl + 'like',details).subscribe( res=> {
+        resolve(res.json());
+      }, err => {
+        reject(err);
+      })
+    }) 
+
+  }
+
+
+  nblike(id) {
+
+    return new Promise((resolve, reject) => {
+      this.hp.get(this.dburl + 'nblike/'+id).subscribe( res=> {
+        resolve(res.json());
+      }, err => {
+        reject(err);
+      })
+    }) 
+
+  }
+
+  nbdislike(id) {
+
+    return new Promise((resolve, reject) => {
+      this.hp.get(this.dburl + 'nbdislike/'+id).subscribe( res=> {
+        resolve(res.json());
+      }, err => {
+        reject(err);
+      })
+    }) 
+
+  }
+
+  userLikeDislike(details) {
+    return new Promise((resolve, reject) => {
+      this.hp.get(this.dburl + 'isUserLikeDislike', {params:details}).subscribe( res=> {
+        resolve(res.json());
+      }, err => {
+        reject(err);
+      })
+    }) 
+
+  }
+
+
+
 
 
 

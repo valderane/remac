@@ -1,0 +1,32 @@
+input {
+    padding: 9px 17px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    color:  rgb(112, 112, 112);
+}
+
+.container {
+    background: #EEF2F6;
+    position: absolute;
+  }
+
+form {
+    width: 30%;
+    margin-left: 10%;
+}
+
+button {
+    width: 100%;
+    background: #FDAF00;
+}

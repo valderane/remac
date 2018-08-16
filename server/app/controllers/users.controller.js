@@ -1,5 +1,8 @@
 const User = require('../modeles/user.model.js') ;
 const Domain = require('../controllers/domains.controller');
+const SubDomain = require('../controllers/subDomains.controller');
+const Villes = require('../controllers/villes.controller');
+
 var jwt = require('jsonwebtoken'); 
 
 exports.create = (req, res) => {
@@ -69,6 +72,8 @@ exports.populate = (req, res) => {
         }
 
         Domain.addDomainsByUsers(docs);
+        SubDomain.addSubDomainsByUsers(docs);
+        Villes.storeVillesByUsers(docs); 
 
         res.json({message:"succefully saved"})
     })
@@ -128,7 +133,9 @@ exports.update = (req, res) => {
         subDomains: req.body.subDomains,
         emails: req.body.emails,
         tels: req.body.tels,
-        entreprise: req.body.entreprise
+        entreprise: req.body.entreprise,
+        adresse: req.body.adresse,
+        adresses: req.body.adresses
     }, {new: true})
     .then(user => {
         if(!user) {
@@ -218,7 +225,7 @@ exports.countUsersByDomain = (req, res) => {
 
 exports.getUsersByDomainSubdomain = (req, res) => {
     var domains = req.query.domains;
-    var subDomains = req.query.subDomains;  
+    var subDomains = req.query.subdomains; 
     var ville = req.query.ville;
     var index = req.query.index;
     var pageLength = req.query.pageLength;
@@ -280,3 +287,144 @@ exports.verifyEmail = (req, res) => {
    
 }
 
+
+exports.like = (req, res) => {
+
+    let id = req.body.id;
+    let idLikeur = req.body.idLikeur;
+
+    if(!id) {
+        res.status(500).json({error: "un id est requis"})
+    }
+    
+    if(!idLikeur) {
+        res.status(500).json({error: "un idLikeur est requis"})
+    }
+
+    User.findById(id, (err, user) => {
+        if(user) {
+
+            let likes = user.likes;
+
+            if(likes.indexOf(idLikeur) > -1 ) {
+                likes.splice( likes.indexOf(idLikeur) , 1);
+            }
+            else {
+                likes.push(idLikeur);
+            }
+
+            User.update({_id: id}, {$set: {likes: likes}}, (err, resp) => {
+                if(err) throw err;
+                res.json({nb:likes.length});
+            })
+
+        }
+        else {
+            res.status(404)
+        }
+    })
+}
+
+
+exports.dislike = (req, res) => {
+
+    let id = req.body.id;
+    let idLikeur = req.body.idLikeur;
+
+    if(!id) {
+        res.status(500).json({error: "un id est requis"})
+    }
+    
+    if(!idLikeur) {
+        res.status(500).json({error: "un idLikeur est requis"})
+    }
+
+    User.findById(id, (err, user) => {
+        if(user) {
+
+            let likes = user.dislikes;
+
+            if(likes.indexOf(idLikeur) > -1 ) {
+                likes.splice( likes.indexOf(idLikeur) , 1);
+            }
+            else {
+                likes.push(idLikeur);
+            }
+
+            User.findByIdAndUpdate(id, {dislikes: likes}, (err, resp) => {
+                if(err) throw err;
+                res.json({nb:likes.length});
+            })
+        }
+        else {
+            res.status(404)
+        }
+    })
+}
+
+exports.getNblike = (req, res) => {
+    let id = req.params.id;
+
+    User.findById(id, (err, user) => {
+        if(err) {
+            res.status(500).json({error:"une erreur s'est produite lors de la récuperation du nombre de likes"});
+        }
+        else {
+            if(user){
+                res.json({nb: user.likes.length});
+            }
+            else {
+                res.status(404);
+            }
+        }
+    })
+}
+
+exports.getNbdislike = (req, res) => {
+    let id = req.params.id;
+
+    User.findById(id, (err, user) => {
+        if(err) {
+            res.status(500).json({error:"une erreur s'est produite lors de la récuperation du nombre de dislikes"});
+        }
+        else {
+            if(user){
+                res.json({nb: user.dislikes.length});
+            }
+            else {
+                res.status(404);
+            }
+        }
+    })
+}
+
+exports.getUserLikeDislike = (req, res) => {
+    let myId = req.query.myId;
+    let userId = req.query.userId;
+
+    console.log(req.query);
+
+    let userLike = false,
+        userDislike = false;
+
+    User.findById(userId, (err, user) => {
+        if(err) {
+            res.status(500).json({error:"une erreur s'est produite lors de la récuperation du nombre de dislikes"});
+        }
+        else {
+            if(user){
+                if(user.likes.indexOf(myId) > -1 ) {
+                    userLike = true;
+                }
+                if(user.dislikes.indexOf(myId) > -1 ) {
+                    userDislike = true;
+                }
+
+                res.json({userLike: userLike, userDislike: userDislike, nblikes: user.likes.length, nbdislikes: user.dislikes.length});
+            }
+            else {
+                res.status(404);
+            }
+        }
+    }) 
+}
