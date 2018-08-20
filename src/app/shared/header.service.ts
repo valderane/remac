@@ -7,8 +7,8 @@ import { User } from './user';
 })
 export class HeaderService {
 
-  private change = new Subject<boolean>();  // cette variable dit si oui ou non le header a changé
-  private currentUser = new Subject<User>();
+  public change = new Subject<boolean>();  // cette variable dit si oui ou non le header a changé
+  public currentUser = new Subject<User>();
 
   change$ = this.change.asObservable();
   currentUser$ = this.currentUser.asObservable();

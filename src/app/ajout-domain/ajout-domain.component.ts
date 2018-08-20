@@ -10,7 +10,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class AjoutDomainComponent implements OnInit {
 
-  private formHandler: FormGroup;
+  public formHandler: FormGroup;
 
   constructor(public clientService: ClientService,
               public formBuilder: FormBuilder) { }

@@ -24,23 +24,23 @@ export class InscriptionComponent implements OnInit {
     gere et valide les données des formulaires
   */
 
-  private user: any = {}; // new user's configs
-  private mdp: string; // confirm mdp variable
-  private mdpValid: boolean;
-  private domainsList: Domain[] = []; // list of all domais available ( come from the server )
-  private inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
+  public user: any = {}; // new user's configs
+  public mdp: string; // confirm mdp variable
+  public mdpValid: boolean;
+  public domainsList: Domain[] = []; // list of all domais available ( come from the server )
+  public inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
   
-  private subDomainsList: string[] = []; // list of all subdomains (depending on the domain's choice )
+  public subDomainsList: string[] = []; // list of all subdomains (depending on the domain's choice )
 
-  private domain: string;
+  public domain: string;
 
-  private registerForm: FormGroup;
-  private submitted = false;
-  private wrong_password = false;
+  public registerForm: FormGroup;
+  public submitted = false;
+  public wrong_password = false;
 
 
-  private filteredOptions: Observable<Domain[]>;
-  private filteredOptionsSub: Observable<Domain[]>;
+  public filteredOptions: Observable<Domain[]>;
+  public filteredOptionsSub: Observable<Domain[]>;
 
 
   
@@ -150,13 +150,13 @@ export class InscriptionComponent implements OnInit {
     
   }
 
-  private _filter(value: string, tab: any[]): Domain[] { // filtre les options d'autocompletion
+  public _filter(value: string, tab: any[]): Domain[] { // filtre les options d'autocompletion
     const filterValue = this.noAccent( value.toLowerCase() );
     return tab.filter(option => this.noAccent(option.name.toLowerCase()).includes(filterValue));
   }
 
 
-  private noAccent(str) {
+  public noAccent(str) {
     var newStr = str;
     return newStr.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
   }

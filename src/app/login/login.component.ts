@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   
 
-  constructor(private userService: UserService, private router: Router, public headerService: HeaderService) { }
+  constructor(public userService: UserService, public router: Router, public headerService: HeaderService) { }
 
   @Output() succesConnexion = new EventEmitter(); // tell to the header parent that the connexion is a success
 

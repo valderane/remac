@@ -10,7 +10,7 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class EventsComponent implements OnInit {
  
-  private filteredOptions: Observable<any[]>;
+  public filteredOptions: Observable<any[]>;
   villeslist: any[];
   villes:any = new FormControl();
 
@@ -36,12 +36,12 @@ export class EventsComponent implements OnInit {
 
   }
 
-  private _filter(value: string, tab: any[]): any[] { // filtre les options d'autocompletion
+  public _filter(value: string, tab: any[]): any[] { // filtre les options d'autocompletion
     const filterValue = this.noAccent( value.toLowerCase() );
     return tab.filter(option => this.noAccent(option.toLowerCase()).includes(filterValue));
   }
 
-  private noAccent(str) {
+  public noAccent(str) {
     var newStr = str;
     return newStr.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
   }

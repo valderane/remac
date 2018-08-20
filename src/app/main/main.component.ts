@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
   pageLenght: number = 10; // nbr total de pages
   eventUpdateDetails: any;
 
-  constructor(private userService: UserService) { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
     this.users = [];

@@ -22,7 +22,7 @@ export class UserService {
   token: any;
   inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
 
-  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar, public jwtHelper: JwtHelperService, public urlService: UrlService) {
+  constructor(public http: HttpClient, public hp: Http, public snackBar: MatSnackBar, public jwtHelper: JwtHelperService, public urlService: UrlService) {
     this.dburl = urlService.getUrl();
   }
 
@@ -334,7 +334,7 @@ export class UserService {
   /*
   -handle error messages
   */
-  private handleHerror<T>(operation = "operation", result?: T){
+  public handleHerror<T>(operation = "operation", result?: T){
     return (error, any): Observable<T> =>{
       console.log( operation + "failed:  " + error.message );
       return of(result as T);
