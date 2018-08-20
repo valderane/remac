@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UrlService {
 
-  url:string = "http://localhost:5000"
+  url:string = "https://remacserver.herokuapp.com"
 
   constructor() { }
 
