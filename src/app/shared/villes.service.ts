@@ -34,7 +34,7 @@ export class VillesService {
 
   getVillesDB() {
     return new Promise((resolve, reject) => {
-      this.http.get(this.dbUrl+'/villes').subscribe(res => {
+      this.http.get(this.dbUrl+'villes').subscribe(res => {
         resolve(res.json());
       }, err => {
         reject(err);

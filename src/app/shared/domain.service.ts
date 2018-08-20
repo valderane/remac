@@ -18,7 +18,7 @@ export class DomainService {
 
   getDomains() {
     return new Promise((resolve, reject) => {
-      this.http.get(this.url+'/domains').subscribe(res => {
+      this.http.get(this.url+'domains').subscribe(res => {
         resolve(res.json().data);
       }, err => {
         console.log("une erreur s'est produite lors de la récupération des domains");
@@ -29,7 +29,7 @@ export class DomainService {
 
   getSubDomains() {
     return new Promise((resolve, reject) => {
-      this.http.get(this.url+'/subDomains').subscribe(res => {
+      this.http.get(this.url+'subDomains').subscribe(res => {
         resolve(res.json().data);
       }, err => {
         console.log("une erreur s'est produite lors de la récupération des professions");

@@ -9,6 +9,7 @@ import { resolve } from 'path';
 import {  MatSnackBar } from '@angular/material';
 import * as jwt_decode from "jwt-decode";
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UrlService } from './url.service';
 
 
 @Injectable({
@@ -17,12 +18,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class UserService {
 
   users: User[];
-  dburl = "http://localhost:5000/";
+  dburl;
   token: any;
   inscriptionOk: string = "inscription réussie, ouvrez votre boîte email pour confirmer votre adresse email. Vous pourrez ensuite vous connecter"
 
-  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar, public jwtHelper: JwtHelperService) {
-    
+  constructor(private http: HttpClient, public hp: Http, public snackBar: MatSnackBar, public jwtHelper: JwtHelperService, public urlService: UrlService) {
+    this.dburl = urlService.getUrl();
   }
 
 
