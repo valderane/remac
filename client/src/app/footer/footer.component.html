@@ -1,9 +1,9 @@
  <div class="footer-options">
       <h1 class="title-footer" >Découvrez les avantages de Remac </h1>
       <mat-grid-list cols="4" rowHeight="3:1">
-          <mat-grid-tile id="tile1"><p style="margin-bottom: -28%">Qui sommes nous ?</p></mat-grid-tile>
+          <mat-grid-tile id="tile1" (click)="toInformations()" ><p style="margin-bottom: -28%"  >Qui sommes nous ?</p></mat-grid-tile>
           <mat-grid-tile id="tile2"><p style="margin-bottom: -28%">News et Médias</p></mat-grid-tile>
-          <mat-grid-tile id="tile3"><p style="margin-bottom: -28%">Evenements</p></mat-grid-tile>
+          <mat-grid-tile id="tile3" (click)="toEvents()" ><p style="margin-bottom: -28%">Evenements</p></mat-grid-tile>
           <mat-grid-tile id="tile4"><p style="margin-bottom: -28%">Boutique en ligne</p></mat-grid-tile>
       </mat-grid-list>
     </div>

@@ -7,6 +7,7 @@
         <mat-divider></mat-divider>
 
         <mat-card-content>
+          <div style="display: flex;"><input placeholder="rechercher un contact..." style="width: 83%; height: 25px; padding: 3px;" > <button mat-button style="height: 35px; min-width: 35px; width: 35px; background: burlywood;" ></button></div>
           <app-conv-card *ngFor="let conv of convs" [conv]="conv" [expId]="getExpId(conv)" (click)="chargeConv(conv)" ></app-conv-card>
         </mat-card-content>
       </mat-card>

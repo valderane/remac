@@ -68,6 +68,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/messagerie']);
   }
 
+  toEvents() {
+    this.router.navigate(['/events']);
+  }
+
   changeHeaderIfAuth(){
     this.userService.checkAuthentication().then((res)=>{
       this.change = true;

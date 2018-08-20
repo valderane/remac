@@ -33,6 +33,9 @@ import { MessagerieComponent } from './messagerie/messagerie.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { InformationsComponent } from './informations/informations.component';
+import { ImgBoxComponent } from './img-box/img-box.component';
+import { EventsComponent } from './events/events.component';
+import { EventCardComponent } from './event-card/event-card.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -61,6 +64,9 @@ export function tokenGetter() {
     MessagerieComponent,
     FooterComponent,
     InformationsComponent,
+    ImgBoxComponent,
+    EventsComponent,
+    EventCardComponent,
   ],
   imports: [
     BrowserAnimationsModule,

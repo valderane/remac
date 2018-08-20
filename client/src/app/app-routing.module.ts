@@ -8,6 +8,8 @@ import { MonProfilComponent } from './mon-profil/mon-profil.component';
 import { AjoutDomainComponent } from './ajout-domain/ajout-domain.component';
 import { MessagerieComponent } from './messagerie/messagerie.component';
 import { IndexGardService } from './shared/index-gard.service';
+import { InformationsComponent } from './informations/informations.component';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   { path: 'index', component: IndexContentComponent, canActivate: [IndexGardService]  },
@@ -15,8 +17,10 @@ const routes: Routes = [
   { path: 'main', component: MainComponent, canActivate: [AuthGuardService] },
   { path: 'profil/:id', component: ProfilComponent, canActivate: [AuthGuardService] },
   { path: 'mon_profil', component: MonProfilComponent, canActivate: [AuthGuardService] },
-  { path: 'ajoutDomain', component: AjoutDomainComponent, canActivate: [AuthGuardService] },
-  { path: 'messagerie', component: MessagerieComponent, canActivate: [AuthGuardService] }
+  { path: 'ajoutDomain', component: AjoutDomainComponent},
+  { path: 'messagerie', component: MessagerieComponent, canActivate: [AuthGuardService] },
+  { path: 'informations', component: InformationsComponent},
+  { path: 'events', component: EventsComponent}
 ];
 
 @NgModule({

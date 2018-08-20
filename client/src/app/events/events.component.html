@@ -1,0 +1,20 @@
+<div>
+
+  <form>
+      <input class="seachInput1" placeholder="Paris, Lyon, Bordeaux..."  type="text" [formControl]="villes" [matAutocomplete]="auto">
+
+      <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{ option }}
+          </mat-option>
+      </mat-autocomplete>
+
+      <button mat-button id="seachButton" (click)="seach()">RECHERCHER ></button>
+
+  </form>
+
+</div>
+
+<app-event-card></app-event-card>
+
+<app-footer></app-footer>

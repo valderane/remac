@@ -12,7 +12,7 @@
         <button mat-button (click)="monProfil()" class="mon_profil" >{{currentUser.firstName}}</button>
         <button mat-button (click)="toAcceuil()"   >Accueil</button>
         <button mat-button (click)="toMessagerie()"  >Messagerie</button>
-        <button mat-button  >Events</button>
+        <button mat-button (click)="toEvents()" >Events</button>
     </div>
 
     <button mat-button class="deconnexion" *ngIf="change" (click)="deconnexion()"  >deconnexion</button>

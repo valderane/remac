@@ -18,7 +18,12 @@ mat-grid-tile {
     background: rgb(255, 255, 255);
     font-family: Arial, Helvetica, sans-serif;
     color: #435f71;
+
   }
+
+.mat-grid-tile:hover {
+    cursor: pointer;
+}
 
 #tile1 {
 

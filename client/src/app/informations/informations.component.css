@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+    border:1px solid;
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.info-content {
+    width:80%;
+    border:1px solid;
+}
+
+.menu {
+    width: 20%;
+    border:1px solid;
+}
+
+.menu > button {
+    width: 100%;
+    border: 1px solid #b3b3b3
+}
+
+/*----------------------------------------------------------------------------------------*/
+
+.title {
+    background: #b3b3b3;
+    text-align: center;
+    padding: 5px;
+}
