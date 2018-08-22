@@ -36,7 +36,6 @@ import { InformationsComponent } from './informations/informations.component';
 import { ImgBoxComponent } from './img-box/img-box.component';
 import { EventsComponent } from './events/events.component';
 import { EventCardComponent } from './event-card/event-card.component';
-import { AlertsModule } from 'angular-alert-module';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -102,8 +101,7 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:3001'],
         blacklistedRoutes: ['localhost:3001/auth/']
       }
-    }),
-    AlertsModule.forRoot()
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
