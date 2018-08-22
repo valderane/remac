@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { HeaderService } from '../shared/header.service';
-import { User } from '../shared/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import * as socketIo from 'socket.io-client';
+import { UrlService } from '../shared/url.service';
+import { MessageService } from '../shared/message.service';
+
 
 
 
@@ -14,7 +17,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class HeaderComponent implements OnInit {
 
-  title = 'remac';
+  title = 'Remac';
   change:boolean = false;
   userUpdated:boolean = false;
   //change2: boolean =  false;
@@ -22,8 +25,21 @@ export class HeaderComponent implements OnInit {
 
   decodedToken: any;
 
-  constructor(public userService: UserService, public router: Router, 
-              public headerService: HeaderService) {
+  url:any;
+  socket: any;
+  nbMessages = 0; // nb de messages non lus
+
+  @Output()
+  changeTitle = new EventEmitter();
+  @Output()
+  resetTitle = new EventEmitter();
+
+
+  constructor(public userService: UserService, 
+              public router: Router, 
+              public headerService: HeaderService, 
+              public urlService: UrlService,
+              public messageService: MessageService ) {
 
   }
 
@@ -38,14 +54,33 @@ export class HeaderComponent implements OnInit {
       this.currentUser = user;
       this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
       this.userUpdated = true;
+
+      // recuperer le nb de messages non lus
+      this.messageService.getNbConvsNonLu(this.currentUser._id).then((res:any)=> {
+        this.nbMessages = res.nb;
+      })
     });
 
-    //si l'utilisateur recharge la page, recuperer l'utilisateur coureant dans le token sauvegardé
+    //si l'utilisateur recharge la page, recuperer l'utilisateur courant dans le token sauvegardé
     if(!this.userUpdated){
       const helper = new JwtHelperService();
       this.currentUser = helper.decodeToken(localStorage.getItem('token'));
       this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
     }
+
+    //gestion du realTime avec socketIo
+    this.url = this.urlService.getUrl();
+    this.socket = socketIo(this.url);
+    this.socket.emit('init-notif', {userId: this.currentUser._id});
+    this.socket.on('recieve', data => {
+      this.nbMessages++;
+      this.changeTitle.emit(this.nbMessages);
+    });
+
+    this.socket.on('estDansMessagerie', data => {
+      this.nbMessages = 0;
+      this.resetTitle.emit();
+    });
     
   }
 
@@ -65,6 +100,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toMessagerie() {
+    this.nbMessages = 0;
+    this.resetTitle.emit();
     this.router.navigate(['/messagerie']);
   }
 

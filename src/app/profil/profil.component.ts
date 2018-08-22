@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../shared/user.service';
+import { MessageService } from '../shared/message.service';
 
 
 @Component({
@@ -22,7 +23,9 @@ export class ProfilComponent implements OnInit {
   thumbdownImage: string = "../../assets/icons/dislike-disabled.svg";
 
   constructor(public route: ActivatedRoute,
-              public userService: UserService) { }
+              public userService: UserService,
+              public messageService: MessageService,
+              public router: Router) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -98,6 +101,16 @@ export class ProfilComponent implements OnInit {
     })
 
 
+  }
+
+
+  contacter() {
+    this.messageService.getConvId([this.myId,this.userId]).then((conv:any) => {
+      this.router.navigate(['/messagerie'], {queryParams: {conversation: conv}})
+    }, err => {
+      console.log(err);
+    });
+    
   }
 
   formateNbLike(nb) {

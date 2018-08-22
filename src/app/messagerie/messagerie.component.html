@@ -19,7 +19,7 @@
         <mat-divider></mat-divider>
         
         <mat-card-content>
-            <div id="list-of-messages">
+            <div id="list-of-messages" #scrollMe >
                 <app-message-card *ngFor="let message of conv.messages" [message]="message" ></app-message-card>
             </div>
           <textarea placeholder="entrer votre message" [(ngModel)]="message" name="mess" ></textarea>
@@ -32,7 +32,7 @@
 
   </div>
 
-  <div style="position: absolute; top:85%; width: 100%;">
+  <div style="position: absolute; top:90%; width: 100%;">
       <app-footer></app-footer>
   </div>
 

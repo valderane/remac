@@ -1,5 +1,5 @@
 
-<app-header></app-header>
+<app-header (changeTitle)=" setTitle('Remac ('+$event+')' ) " (resetTitle)="setTitle('Remac')" ></app-header>
 <router-outlet></router-outlet>
 
 

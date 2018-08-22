@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // material design
 import {
   MatToolbarModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSnackBarModule, MatChipsModule,
-  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatListModule, MatDividerModule, MatRadioModule
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatListModule, MatDividerModule, MatRadioModule, MatBadgeModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -78,6 +78,7 @@ export function tokenGetter() {
     MatFormFieldModule,
     MatIconModule,
     MatChipsModule,
+    MatBadgeModule,
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
