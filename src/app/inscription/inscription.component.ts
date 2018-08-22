@@ -1,10 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { User } from '../shared/user';
 import { Domain } from '../shared/domain';
-import { FormControl } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
-import { headersToString } from 'selenium-webdriver/http';
 import { HeaderService } from '../shared/header.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomainService } from '../shared/domain.service';
@@ -12,6 +9,7 @@ import { VillesService } from '../shared/villes.service';
 import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { AlertsService } from 'angular-alert-module';
 
 @Component({
   selector: 'app-inscription',
@@ -51,9 +49,12 @@ export class InscriptionComponent implements OnInit {
               public router: Router, 
               public headerService: HeaderService, 
               public formBuilder:  FormBuilder,
-              public snackBar: MatSnackBar) { }
+              public snackBar: MatSnackBar,
+            public alertService: AlertsService) { }
 
   ngOnInit() {
+    this.alertService.setDefaults('timeout',0);
+    this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
 
     //============== recup des domains et sous domains ===============
 
@@ -112,6 +113,7 @@ export class InscriptionComponent implements OnInit {
     if(!this.mdpValid){
       //passwords didn't match
       this.wrong_password = true;
+      this.alertService.setMessage("Les mots de passe ne correspondent pas!",'error');
     
     }
     
@@ -131,19 +133,25 @@ export class InscriptionComponent implements OnInit {
               //this.headerService.updateChange(true);
               //this.router.navigate(['/main']);
                /* prevenir le client qu'il doit vérifier son email */
-              this.snackBar.open(this.inscriptionOk, "ok", {duration: 1000, horizontalPosition:'right'});
+              this.registerForm.reset();
+              this.alertService.setMessage(this.inscriptionOk,'success');
       
             }, (err) => {
-              console.log(err);
+              console.log(err.json());
             });
          }
          else{
            // code postal invalide
+           this.alertService.setMessage("code postal invalide",'error');
          }
        }, err => {
+        this.alertService.setMessage(err.json().error,'error');
          console.log(err);
        })
 
+      }
+      else {
+        this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
       }
 
     }

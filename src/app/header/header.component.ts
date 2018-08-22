@@ -63,9 +63,11 @@ export class HeaderComponent implements OnInit {
 
     //si l'utilisateur recharge la page, recuperer l'utilisateur courant dans le token sauvegardé
     if(!this.userUpdated){
-      const helper = new JwtHelperService();
-      this.currentUser = helper.decodeToken(localStorage.getItem('token'));
-      this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
+      if(localStorage.getItem('token')) {
+        const helper = new JwtHelperService();
+        this.currentUser = helper.decodeToken(localStorage.getItem('token'));
+        this.currentUser.firstName = this.userService.formaterNom(this.currentUser.firstName);
+      }
     }
 
     //gestion du realTime avec socketIo
