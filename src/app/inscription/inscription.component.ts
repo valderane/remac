@@ -9,7 +9,6 @@ import { VillesService } from '../shared/villes.service';
 import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { AlertsService } from 'angular-alert-module';
 
 @Component({
   selector: 'app-inscription',
@@ -49,12 +48,9 @@ export class InscriptionComponent implements OnInit {
               public router: Router, 
               public headerService: HeaderService, 
               public formBuilder:  FormBuilder,
-              public snackBar: MatSnackBar,
-            public alertService: AlertsService) { }
+              public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.alertService.setDefaults('timeout',0);
-    this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
 
     //============== recup des domains et sous domains ===============
 
@@ -113,7 +109,7 @@ export class InscriptionComponent implements OnInit {
     if(!this.mdpValid){
       //passwords didn't match
       this.wrong_password = true;
-      this.alertService.setMessage("Les mots de passe ne correspondent pas!",'error');
+      //this.alertService.setMessage("Les mots de passe ne correspondent pas!",'error');
     
     }
     
@@ -134,7 +130,7 @@ export class InscriptionComponent implements OnInit {
               //this.router.navigate(['/main']);
                /* prevenir le client qu'il doit vérifier son email */
               this.registerForm.reset();
-              this.alertService.setMessage(this.inscriptionOk,'success');
+              //this.alertService.setMessage(this.inscriptionOk,'success');
       
             }, (err) => {
               console.log(err.json());
@@ -142,16 +138,16 @@ export class InscriptionComponent implements OnInit {
          }
          else{
            // code postal invalide
-           this.alertService.setMessage("code postal invalide",'error');
+           //this.alertService.setMessage("code postal invalide",'error');
          }
        }, err => {
-        this.alertService.setMessage(err.json().error,'error');
+        //this.alertService.setMessage(err.json().error,'error');
          console.log(err);
        })
 
       }
       else {
-        this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
+        //this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
       }
 
     }
