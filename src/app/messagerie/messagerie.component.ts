@@ -129,7 +129,7 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
         this.loadConv = false;
         this.interlocuteur = user.lastName +" "+ user.firstName;
         this.conv = conv;
-        this.socket.emit('init-conv', {conv: this.conv._id});// initialisation de la conv
+        this.socket.emit('init-conv', {conv: this.conv._id, userId:this.myId});// initialisation de la conv
         this.scrollToBottom(); 
       }, err => {
         this.loadConv = false;
