@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../shared/user";
 import {UserService} from "../shared/user.service";
+import { AlertsComponent } from '../alerts/alerts.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-main',
@@ -16,7 +18,10 @@ export class MainComponent implements OnInit {
   pageLenght: number = 10; // nbr total de pages
   eventUpdateDetails: any;
 
-  constructor(public userService: UserService) { }
+  load: boolean = false;
+
+  constructor(public userService: UserService,
+              public dialog:  MatDialog) { }
 
   ngOnInit() {
     this.users = [];
@@ -47,6 +52,7 @@ export class MainComponent implements OnInit {
       this.users = [];
 
       //nbr d'occurences 
+      this.load = true;
       this.userService.countUsers(tableaux).then((data: any) => {
         this.pageLenght = Math.round(data.nbr / this.pageSize);
         console.log(this.pageLenght);
@@ -56,14 +62,16 @@ export class MainComponent implements OnInit {
         tableaux.pageLength = this.pageSize;
         tableaux.index = this.pageIndex;
         this.userService.getUsersByDomainSubDomain(tableaux).then((data: any) => {
+          this.load = false;
           this.users = data;
         }, err => {
-          console.log(err);
-          
+          this.load = false;
+          this.openDialog('Erreur', 'Une erreur est survenue lors du traitement de votre requête. Assurez vous que vous avez une bonne connexion internet puis réessayez')
         });
 
       }, err => {
-        console.log(err);
+        this.load = false;
+        this.openDialog('Erreur', 'Une erreur est survenue lors du traitement de votre requête. Assurez vous que vous avez une bonne connexion internet puis réessayez')
       });
 
       
@@ -95,6 +103,14 @@ export class MainComponent implements OnInit {
   
   }
 
-  
+  public openDialog(title, text) {
+    this.dialog.open(AlertsComponent, {
+      width:'350px',
+      data: {
+        title: title,
+        text:text
+      }
+    });
+  }
 
 }

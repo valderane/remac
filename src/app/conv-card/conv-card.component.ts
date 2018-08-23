@@ -10,6 +10,7 @@ export class ConvCardComponent implements OnInit {
 
   @Input() conv: any;
   @Input() expId: string;
+  @Input() convLu: boolean;
   prenomExp: string = "";
   lastMessage: string = "";
   image:string = "http://st.depositphotos.com/1779253/5140/v/950/depositphotos_51404241-stock-illustration-female-profile-avatar-icon-white.jpg";

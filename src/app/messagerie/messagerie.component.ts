@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class MessagerieComponent implements OnInit, AfterViewChecked {
 
   convs: any[] = [];
+  boolsConvs: any[] = [];
   conv: any = {}; //conversation selectionnée dans convs
   myId: string = "";
   mesDonnees: any = {};
@@ -21,6 +22,11 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
 
   url:string;
   socket:any;
+
+  loadConv = false;
+  loadConvs = false;
+
+
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
@@ -37,23 +43,50 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
       console.log(err);
     })
 
+    this.loadConvs = true;
     this.messageService.getConvs(this.myId).then( (convs: any[]) => {
       this.convs = convs;
+
+      //trie des convs par ordre de lu 
+      for (let i = 0; i < convs.length; i++) {
+        this.boolsConvs.push(this.convLu(this.convs[i]));
+      }
+
+      let convsTri = [];
+      for (let i = 0; i < this.convs.length; i++) {
+        if(this.boolsConvs[i]) {
+          convsTri.push(this.convs[i])
+        }
+      }
+      for (let i = 0; i < this.convs.length; i++) {
+        if(!this.boolsConvs[i]) {
+          convsTri.push(this.convs[i])
+        }
+      }
+
+      this.convs = convsTri;
+
       //initialisation de conv
       let convId = this.route.snapshot.paramMap.get('conversation');
+      console.log("convId =  "+convId);
+      this.loadConv = true;
       if(convId) {
         this.messageService.getConv(convId).then( conv => {
+          this.loadConv = false;
           this.chargeConv(conv);
         }, err => {
-          this.chargeConv(convs[0])
+          this.loadConv = false;
+          this.chargeConv(convs[0]);
           console.log(err);
         })
       }
       else {
+        this.loadConv = false;
         this.chargeConv(convs[0]);
       }
       
     }, err => {
+      this.loadConvs = false;
       console.log(err);
     })
 
@@ -69,8 +102,7 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
 
   }
 
-  ngAfterViewChecked() {        
-    this.scrollToBottom();   
+  ngAfterViewChecked() {          
     this.socket.emit('estDansMessagerie', {id: this.myId});     
   } 
 
@@ -88,20 +120,26 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
   }
 
   chargeConv(conv) {
+    this.loadConv = true;
     let autre = this.getExpId(conv);
 
     this.userService.getUser(autre).then( (user: any) => {
+      this.loadConv = false;
       this.interlocuteur = user.lastName +" "+ user.firstName;
       this.conv = conv;
       this.socket.emit('init-conv', {conv: this.conv._id});// initialisation de la conv
       this.scrollToBottom(); 
     }, err => {
+      this.loadConv = false;
       console.log(err);
     })
   }
 
   convLu(convDetails) {
-    return convDetails.messages[convDetails.messages.length - 1];
+    if(!convDetails.messages[convDetails.messages.length - 1]){
+      return true;
+    }
+    return convDetails.messages[convDetails.messages.length - 1].lu.indexOf(this.myId) > -1;
   }
 
   sendMessage() {
@@ -110,12 +148,16 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
         exp: this.myId, 
         dest: this.getExpId(this.conv),  
         prenomExp: this.mesDonnees.lastName+" "+this.mesDonnees.firstName || "unset",
-        msg: this.message || "message vide"
+        msg: this.message || "message vide",
+        lu: [this.myId]
       };
-      console.log(msgInfos);
       this.socket.emit('msg', { msgInfos: msgInfos, conv: this.conv._id}); // envoi des données du msg au serveur
 
       this.conv.messages.push(msgInfos);
+
+      this.message = "";
+
+      this.scrollToBottom(); 
     }
     
   

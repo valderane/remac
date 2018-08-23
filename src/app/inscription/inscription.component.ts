@@ -6,9 +6,10 @@ import { HeaderService } from '../shared/header.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomainService } from '../shared/domain.service';
 import { VillesService } from '../shared/villes.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-inscription',
@@ -39,6 +40,8 @@ export class InscriptionComponent implements OnInit {
   public filteredOptions: Observable<Domain[]>;
   public filteredOptionsSub: Observable<Domain[]>;
 
+  load: boolean = false;
+
 
   
 
@@ -48,7 +51,8 @@ export class InscriptionComponent implements OnInit {
               public router: Router, 
               public headerService: HeaderService, 
               public formBuilder:  FormBuilder,
-              public snackBar: MatSnackBar) { }
+              public snackBar: MatSnackBar,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -106,10 +110,14 @@ export class InscriptionComponent implements OnInit {
 
   submit(): void {
     this.submitted = true;
-    if(!this.mdpValid){
+    if(this.registerForm.controls.password.value.length < 6) {
+      this.openDialog("Erreur", "Mot de passe trop court, au moins 6 caractères alphanumériques attenduent ...");
+    }
+    else if(!this.mdpValid){
       //passwords didn't match
       this.wrong_password = true;
       //this.alertService.setMessage("Les mots de passe ne correspondent pas!",'error');
+      this.openDialog("Erreur", "Les mots de passe ne correspondent pas ...");
     
     }
     
@@ -117,6 +125,7 @@ export class InscriptionComponent implements OnInit {
      if(this.registerForm.valid){
        this.user = this.registerForm.value; 
        var codePostale = this.user.cp;
+       this.load = true;
        this.villeService.getVille(codePostale).then((res: any[]) => {
          if(res.length > 0) {
             this.user.ville = res[0].nom; 
@@ -129,16 +138,22 @@ export class InscriptionComponent implements OnInit {
               //this.headerService.updateChange(true);
               //this.router.navigate(['/main']);
                /* prevenir le client qu'il doit vérifier son email */
+               this.load = false;
+               this.openDialog("Succès", this.inscriptionOk);
               this.registerForm.reset();
               //this.alertService.setMessage(this.inscriptionOk,'success');
       
             }, (err) => {
-              console.log(err.json());
+              console.log(err);
+              this.load = false;
+              this.openDialog("Erreur", "Cet email est invalide ou est déjà utilisé ...");
             });
          }
          else{
            // code postal invalide
            //this.alertService.setMessage("code postal invalide",'error');
+           this.load = false;
+           this.openDialog("Erreur", "Code postal invalide!");
          }
        }, err => {
         //this.alertService.setMessage(err.json().error,'error');
@@ -148,6 +163,8 @@ export class InscriptionComponent implements OnInit {
       }
       else {
         //this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
+        this.openDialog("Erreur", "Vous devez remplir tous les champs ...");
+        
       }
 
     }
@@ -163,6 +180,16 @@ export class InscriptionComponent implements OnInit {
   public noAccent(str) {
     var newStr = str;
     return newStr.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  }
+
+  public openDialog(title, text) {
+    this.dialog.open(AlertsComponent, {
+      width:'350px',
+      data: {
+        title: title,
+        text:text
+      }
+    });
   }
   
 }

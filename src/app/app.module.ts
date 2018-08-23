@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // material design
 import {
   MatToolbarModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSnackBarModule, MatChipsModule,
-  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatListModule, MatDividerModule, MatRadioModule, MatBadgeModule
+  MatButtonModule, MatGridListModule, MatSelectModule, MatCardModule, MatIconModule, MatPaginatorModule, MatListModule, MatDividerModule, MatRadioModule, MatBadgeModule, MatDialogModule, MatProgressBarModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -36,6 +36,7 @@ import { InformationsComponent } from './informations/informations.component';
 import { ImgBoxComponent } from './img-box/img-box.component';
 import { EventsComponent } from './events/events.component';
 import { EventCardComponent } from './event-card/event-card.component';
+import { AlertsComponent } from './alerts/alerts.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -67,6 +68,7 @@ export function tokenGetter() {
     ImgBoxComponent,
     EventsComponent,
     EventCardComponent,
+    AlertsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -78,6 +80,7 @@ export function tokenGetter() {
     MatFormFieldModule,
     MatIconModule,
     MatChipsModule,
+    MatDialogModule,
     MatBadgeModule,
     MatInputModule,
     MatButtonModule,
@@ -92,6 +95,7 @@ export function tokenGetter() {
     MatSelectModule,
     MatListModule,
     MatGridListModule,
+    MatProgressBarModule,
     MatSnackBarModule,
     MatAutocompleteModule,
     AppRoutingModule,
@@ -104,6 +108,7 @@ export function tokenGetter() {
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AlertsComponent]
 })
 export class AppModule { }

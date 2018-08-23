@@ -8,6 +8,8 @@
   <div>
     <app-main-users [users]="users"></app-main-users>
   </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="load" ></mat-progress-bar>
 
   <app-footer></app-footer>
 </div>
+
