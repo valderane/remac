@@ -45,6 +45,7 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
 
     this.loadConvs = true;
     this.messageService.getConvs(this.myId).then( (convs: any[]) => {
+      this.loadConvs = false;
       this.convs = convs;
 
       //trie des convs par ordre de lu 
@@ -120,19 +121,25 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
   }
 
   chargeConv(conv) {
-    this.loadConv = true;
-    let autre = this.getExpId(conv);
+    if(conv) {
+      this.loadConv = true;
+      let autre = this.getExpId(conv);
 
-    this.userService.getUser(autre).then( (user: any) => {
-      this.loadConv = false;
-      this.interlocuteur = user.lastName +" "+ user.firstName;
-      this.conv = conv;
-      this.socket.emit('init-conv', {conv: this.conv._id});// initialisation de la conv
-      this.scrollToBottom(); 
-    }, err => {
-      this.loadConv = false;
-      console.log(err);
-    })
+      this.userService.getUser(autre).then( (user: any) => {
+        this.loadConv = false;
+        this.interlocuteur = user.lastName +" "+ user.firstName;
+        this.conv = conv;
+        this.socket.emit('init-conv', {conv: this.conv._id});// initialisation de la conv
+        this.scrollToBottom(); 
+      }, err => {
+        this.loadConv = false;
+        console.log(err);
+      })
+    }
+    else {
+      conv = {}
+    }
+    
   }
 
   convLu(convDetails) {

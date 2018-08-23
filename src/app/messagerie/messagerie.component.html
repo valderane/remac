@@ -21,7 +21,6 @@
         
         <mat-card-content>
             <div id="list-of-messages" #scrollMe >
-                <mat-progress-bar mode="indeterminate" *ngIf="loadConvs" ></mat-progress-bar>
                 <app-message-card *ngFor="let message of conv.messages" [message]="message" ></app-message-card>
             </div>
           <textarea placeholder="entrer votre message" [(ngModel)]="message" name="mess" ></textarea>
