@@ -38,6 +38,7 @@ import { EventsComponent } from './events/events.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { AlertsComponent } from './alerts/alerts.component';
 
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }

@@ -8,7 +8,7 @@
 
         <mat-card-content>
           <div style="display: flex;"><input placeholder="rechercher un contact..." style="width: 83%; height: 25px; padding: 3px;" > <button mat-button style="height: 35px; min-width: 35px; width: 35px; background: burlywood;" ></button></div>
-          <app-conv-card *ngFor="let conv of convs" [conv]="conv" [expId]="getExpId(conv)" [convLu]="convLu(conv)" (click)="chargeConv(conv)" ></app-conv-card>
+          <app-conv-card *ngFor="let conv of convs" [conv]="conv" [expId]="getExpId(conv)" [convLu]="conv.lu" (click)="chargeConv(conv);" ></app-conv-card>
         </mat-card-content>
       </mat-card>
     </div>
@@ -20,7 +20,7 @@
         <mat-divider></mat-divider>
         
         <mat-card-content>
-            <div id="list-of-messages" #scrollMe >
+            <div id="list-of-messages" #scrollMe (scroll)="onScroll()" >
                 <app-message-card *ngFor="let message of conv.messages" [message]="message" ></app-message-card>
             </div>
           <textarea placeholder="entrer votre message" [(ngModel)]="message" name="mess" ></textarea>

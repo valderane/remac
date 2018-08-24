@@ -26,9 +26,9 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
   loadConv = false;
   loadConvs = false;
 
+  disableScrollDown = false;
 
-
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  @ViewChild('scrollMe') public myScrollContainer: ElementRef;
 
   constructor(public messageService: MessageService, public userService: UserService, public urlService: UrlService, public route: ActivatedRoute) { }
 
@@ -50,18 +50,18 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
 
       //trie des convs par ordre de lu 
       for (let i = 0; i < convs.length; i++) {
-        this.boolsConvs.push(this.convLu(this.convs[i]));
+        convs[i].lu = this.convLu(this.convs[i]);
       }
 
       let convsTri = [];
       for (let i = 0; i < this.convs.length; i++) {
-        if(this.boolsConvs[i]) {
-          convsTri.push(this.convs[i])
+        if(this.convs[i].lu) {
+          convsTri.push(this.convs[i]);
         }
       }
       for (let i = 0; i < this.convs.length; i++) {
-        if(!this.boolsConvs[i]) {
-          convsTri.push(this.convs[i])
+        if(!this.convs[i].lu) {
+          convsTri.push(this.convs[i]);
         }
       }
 
@@ -99,12 +99,13 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
     this.socket = socketIo(this.url);
     this.socket.on('recieve', data => {
       this.conv.messages.push(data.msg);
+      this.socket.emit('estDansMessagerie', {id: this.myId}); 
     });
 
   }
 
-  ngAfterViewChecked() {          
-    this.socket.emit('estDansMessagerie', {id: this.myId});     
+  ngAfterViewChecked() {              
+    this.scrollToBottom();
   } 
 
   getExpId(conv) {
@@ -125,6 +126,9 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
       this.loadConv = true;
       let autre = this.getExpId(conv);
 
+      //mettre la conv a lu
+      this.convLu(conv._id);
+
       this.userService.getUser(autre).then( (user: any) => {
         this.loadConv = false;
         this.interlocuteur = user.lastName +" "+ user.firstName;
@@ -137,20 +141,24 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
       })
     }
     else {
-      conv = {}
+      conv = {};
     }
+
+    this.scrollToBottom(); 
     
   }
 
-  convLu(convDetails) {
-    if(!convDetails.messages[convDetails.messages.length - 1]){
-      return true;
+  convLu(convId) {
+    for (let i = 0; i < this.convs.length; i++) {
+      if(this.convs[i]._id == convId) {
+        this.convs[i].lu = true;
+      }
     }
-    return convDetails.messages[convDetails.messages.length - 1].lu.indexOf(this.myId) > -1;
   }
 
   sendMessage() {
     if(this.message.length > 0) {
+      this.scrollToBottom(); 
       let msgInfos = {
         exp: this.myId, 
         dest: this.getExpId(this.conv),  
@@ -163,8 +171,6 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
       this.conv.messages.push(msgInfos);
 
       this.message = "";
-
-      this.scrollToBottom(); 
     }
     
   
@@ -177,6 +183,16 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
     catch(err) {
       console.log(err)
     }                 
+  }
+
+  private onScroll() {
+    let element = this.myScrollContainer.nativeElement
+    let atBottom = element.scrollHeight - element.scrollTop === element.clientHeight
+    if (this.disableScrollDown && atBottom) {
+        this.disableScrollDown = false
+    } else {
+        this.disableScrollDown = true
+    }
   }
 
   

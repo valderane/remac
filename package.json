@@ -25,6 +25,7 @@
     "@angular/router": "^6.0.3",
     "@auth0/angular-jwt": "^2.0.0",
     "angular-alert-module": "^2.0.3",
+    "angular-emoji": "^0.1.45",
     "angular-loaders": "^1.0.0",
     "core-js": "^2.5.4",
     "express": "^4.16.3",
