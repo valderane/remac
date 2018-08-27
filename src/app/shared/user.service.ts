@@ -83,11 +83,10 @@ export class UserService {
             /*
             this.token = data.token;
             localStorage.setItem('token', this.token);
-            resolve(data);
             */
+            resolve(data);
+            
 
-            /* prevenir le client qu'il doit vérifier son email */
-            this.snackBar.open(this.inscriptionOk, "ok", {duration: 10000});
 
  
           }, (err) => {

@@ -41,6 +41,8 @@ export class InscriptionComponent implements OnInit {
   public filteredOptionsSub: Observable<Domain[]>;
 
   load: boolean = false;
+  erreur: string;
+  inscriptionSucces: boolean = false;
 
 
   
@@ -111,13 +113,15 @@ export class InscriptionComponent implements OnInit {
   submit(): void {
     this.submitted = true;
     if(this.registerForm.controls.password.value.length < 6) {
-      this.openDialog("Erreur", "Mot de passe trop court, au moins 6 caractères alphanumériques attenduent ...");
+      //this.openDialog("Erreur", "Mot de passe trop court, au moins 6 caractères alphanumériques attenduent ...");
+      this.erreur = "Mot de passe trop court, au moins 6 caractères alphanumériques attenduent ...";
     }
     else if(!this.mdpValid){
       //passwords didn't match
       this.wrong_password = true;
       //this.alertService.setMessage("Les mots de passe ne correspondent pas!",'error');
-      this.openDialog("Erreur", "Les mots de passe ne correspondent pas ...");
+      //this.openDialog("Erreur", "Les mots de passe ne correspondent pas ...");
+      this.erreur = "Les mots de passe ne correspondent pas ...";
     
     }
     
@@ -140,20 +144,22 @@ export class InscriptionComponent implements OnInit {
                /* prevenir le client qu'il doit vérifier son email */
                this.load = false;
                this.openDialog("Succès", this.inscriptionOk);
-              this.registerForm.reset();
+               this.inscriptionSucces = true;
               //this.alertService.setMessage(this.inscriptionOk,'success');
       
             }, (err) => {
               console.log(err);
               this.load = false;
-              this.openDialog("Erreur", "Cet email est invalide ou est déjà utilisé ...");
+              //this.openDialog("Erreur", "Cet email est invalide ou est déjà utilisé ...");
+              this.erreur = "Cet email est invalide ou est déjà utilisé ...";
             });
          }
          else{
            // code postal invalide
            //this.alertService.setMessage("code postal invalide",'error');
            this.load = false;
-           this.openDialog("Erreur", "Code postal invalide!");
+           //this.openDialog("Erreur", "Code postal invalide!");
+           this.erreur = "Code postal invalide!";
          }
        }, err => {
         //this.alertService.setMessage(err.json().error,'error');
@@ -163,7 +169,7 @@ export class InscriptionComponent implements OnInit {
       }
       else {
         //this.alertService.setMessage("Vous devez remplir correctement tous les champs",'error');
-        this.openDialog("Erreur", "Vous devez remplir tous les champs ...");
+        //this.openDialog("Erreur", "Vous devez remplir tous les champs ...");
         
       }
 

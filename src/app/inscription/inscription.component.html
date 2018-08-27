@@ -1,16 +1,21 @@
-<mat-progress-bar mode="indeterminate" *ngIf="load" ></mat-progress-bar>
 
-<div class="form-div">
+
+<div class="form-div" *ngIf="!inscriptionSucces" >
+
+  <p style="color:#ff2f2f; font-family: Arial, Helvetica, sans-serif; " *ngIf="submitted && !registerForm.valid">Veuillez remplir tous les champs ...</p>
+  <p style="color:#ff2f2f; font-family: Arial, Helvetica, sans-serif;" *ngIf="submitted && registerForm.valid && erreur">{{erreur}}</p>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="load" ></mat-progress-bar>
   
-  <h1 class="titre" >Inscrivez vous ...</h1>
+  <h1 class="titre" *ngIf="!submitted" >Inscrivez vous ...</h1>
 
   <form (submit)="submit()" [formGroup]="registerForm" >
 
       <div class="inline" >
 
-        <input  type="text"   placeholder="Nom de famille *" formControlName="firstName" required >
+        <input  type="text" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.firstName.valid)? '#ffd4d4' : 'white' }"   placeholder="Nom de famille *" formControlName="firstName" required >
 
-        <input  type="text" class="l" color="primary" placeholder="Prénom *"formControlName="lastName"  required>
+        <input  type="text" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.lastName.valid)? '#ffd4d4' : 'white' }" class="l" color="primary" placeholder="Prénom *"formControlName="lastName"  required>
       
       </div>
 
@@ -18,9 +23,9 @@
 
       <div class="inline" >
 
-        <input  type="number"  placeholder="Code postal *" formControlName="cp"  required>
+        <input  type="number" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.cp.valid)? '#ffd4d4' : 'white' }"  placeholder="Code postal *" formControlName="cp"  required>
 
-        <input  type="tel" class="l"  placeholder="Téléphone *" formControlName="tel" required >
+        <input  type="tel" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.tel.valid)? '#ffd4d4' : 'white' }"  class="l"  placeholder="Téléphone *" formControlName="tel" required >
       
       </div>
      
@@ -28,11 +33,11 @@
      
     <div class="reste">
 
-        <input  type="email"  placeholder="Email *" formControlName="email" required>
+        <input  type="email" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.email.valid)? '#ffd4d4' : 'white' }"  placeholder="Email *" formControlName="email" required>
 
       <br>
 
-        <input placeholder="Secteur d'activité..."  type="text" formControlName="domain" [matAutocomplete]="auto">
+        <input placeholder="Secteur d'activité..." [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.domain.valid)? '#ffd4d4' : 'white' }"  type="text" formControlName="domain" [matAutocomplete]="auto">
 
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
@@ -42,7 +47,7 @@
       
       <br>
 
-        <input placeholder="Profession..."  type="text" formControlName="subDomain" [matAutocomplete]="auto2">
+        <input placeholder="Profession..."  type="text" [ngStyle]="{'backgroundColor': submitted && !(registerForm.controls.subDomain.valid)? '#ffd4d4' : 'white' }" formControlName="subDomain" [matAutocomplete]="auto2">
 
         <mat-autocomplete #auto2="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptionsSub | async" [value]="option.name">
