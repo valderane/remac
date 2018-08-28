@@ -185,7 +185,7 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
     }                 
   }
 
-  private onScroll() {
+  public onScroll() {
     let element = this.myScrollContainer.nativeElement
     let atBottom = element.scrollHeight - element.scrollTop === element.clientHeight
     if (this.disableScrollDown && atBottom) {
