@@ -19,6 +19,8 @@ export class MainComponent implements OnInit {
   eventUpdateDetails: any;
 
   load: boolean = false;
+  displayPrecedent: boolean = false;
+  displaySuivant: boolean = false;
 
   constructor(public userService: UserService,
               public dialog:  MatDialog) { }
@@ -44,7 +46,7 @@ export class MainComponent implements OnInit {
   */
  
   updateUserList(event) {
-    let tableaux = event
+    let tableaux = event;
     let domains = event.domains;
     this.eventUpdateDetails = event;
      //empty the users list before filling it
@@ -61,6 +63,7 @@ export class MainComponent implements OnInit {
         //recuperer les elts de la première page
         tableaux.pageLength = this.pageSize;
         tableaux.index = this.pageIndex;
+        this.showHideButtons();
         this.userService.getUsersByDomainSubDomain(tableaux).then((data: any) => {
           this.load = false;
           this.users = data;
@@ -100,7 +103,53 @@ export class MainComponent implements OnInit {
       console.log(err);
           
     });
+
+    
   
+  }
+
+  precedent() {
+    this.pageIndex--;
+    this.showHideButtons();
+    this.eventUpdateDetails.index = this.pageIndex;
+    this.userService.getUsersByDomainSubDomain(this.eventUpdateDetails).then((data: any) => {
+      this.load = false;
+      this.users = data;
+    }, err => {
+      this.load = false;
+      this.openDialog('Erreur', 'Une erreur est survenue lors du traitement de votre requête. Assurez vous que vous avez une bonne connexion internet puis réessayez')
+    });
+
+  }
+
+  suivant() {
+    this.pageIndex++;
+    this.showHideButtons();
+    this.eventUpdateDetails.index = this.pageIndex;
+    this.userService.getUsersByDomainSubDomain(this.eventUpdateDetails).then((data: any) => {
+          this.load = false;
+          this.users = data;
+        }, err => {
+          this.load = false;
+          this.openDialog('Erreur', 'Une erreur est survenue lors du traitement de votre requête. Assurez vous que vous avez une bonne connexion internet puis réessayez')
+        });
+  }
+
+  showHideButtons() {
+    if(this.pageIndex <= 0) {
+      this.displayPrecedent = false;
+    }
+    else {
+      this.displayPrecedent = true;
+    }
+
+    if(this.pageIndex >= this.pageLenght) {
+      this.displaySuivant = false;
+    }
+    else {
+      this.displaySuivant = true;
+    }
+
   }
 
   public openDialog(title, text) {

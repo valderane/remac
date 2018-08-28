@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, OnDestroy} from '@angular/core';
 import { MessageService } from '../shared/message.service';
 import { UserService } from '../shared/user.service';
 import * as socketIo from 'socket.io-client';
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './messagerie.component.html',
   styleUrls: ['./messagerie.component.css']
 })
-export class MessagerieComponent implements OnInit, AfterViewChecked {
+export class MessagerieComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   convs: any[] = [];
   boolsConvs: any[] = [];
@@ -185,7 +185,7 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
     }                 
   }
 
-  public onScroll() {
+  onScroll() {
     let element = this.myScrollContainer.nativeElement
     let atBottom = element.scrollHeight - element.scrollTop === element.clientHeight
     if (this.disableScrollDown && atBottom) {
@@ -193,6 +193,10 @@ export class MessagerieComponent implements OnInit, AfterViewChecked {
     } else {
         this.disableScrollDown = true
     }
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
   

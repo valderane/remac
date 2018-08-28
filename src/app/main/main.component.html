@@ -10,6 +10,11 @@
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="load" ></mat-progress-bar>
 
+  <div class="pagination">
+    <button mat-button (click)=" precedent() " *ngIf="displayPrecedent" >Précedent</button>
+    <button mat-button  (click)=" suivant() " *ngIf="displaySuivant" >Suivant</button>
+  </div>
+
   <app-footer></app-footer>
 </div>
 

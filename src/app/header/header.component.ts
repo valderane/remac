@@ -77,11 +77,13 @@ export class HeaderComponent implements OnInit {
     this.socket.on('recieve', data => {
       this.nbMessages++;
       this.changeTitle.emit(this.nbMessages);
+      console.log('notification !!!!!!!!!!')
     });
 
     this.socket.on('estDansMessagerie', data => {
       this.nbMessages = 0;
       this.resetTitle.emit();
+      console.log('reseted');
     });
     
   }
